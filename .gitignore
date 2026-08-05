@@ -36,6 +36,16 @@ yarn-error.log*
 # vercel
 .vercel
 
+# fichiers de référence de marque (non nécessaires au build)
+/brand-reference
+
+# permissions Claude Code locales à cette machine
+/.claude/settings.local.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# service worker généré par Serwist à chaque build
+/public/sw.js
+/public/sw.js.map

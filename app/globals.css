@@ -1,26 +1,28 @@
 @import "tailwindcss";
 
+/*
+ * Palette Horizon — aucune autre couleur que celles-ci.
+ * Noir #080B0D · Ivoire #F8F8F4 · Orange #FF6A00 (accent ponctuel uniquement)
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-black: #080b0d;
+  --color-ivory: #f8f8f4;
+  --color-accent: #ff6a00;
+  --background: var(--color-ivory);
+  --foreground: var(--color-black);
 }
 
 @theme inline {
+  --color-black: var(--color-black);
+  --color-ivory: var(--color-ivory);
+  --color-accent: var(--color-accent);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-manrope);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
