@@ -49,7 +49,7 @@ async function searchPhotos(query: string, count: number): Promise<string[]> {
   return urls;
 }
 
-export function getVehiclePhotos(category: VehicleCategory, count = 3): Promise<string[]> {
+export function getVehiclePhotos(category: VehicleCategory, count = 6): Promise<string[]> {
   return searchPhotos(CATEGORY_KEYWORDS[category], count);
 }
 
