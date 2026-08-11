@@ -34,6 +34,7 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase → Project Settings → API                                    |
 | `ANTHROPIC_API_KEY`             | console.anthropic.com/settings/keys (utilisée côté serveur seulement) |
 | `UNSPLASH_ACCESS_KEY`           | unsplash.com/oauth/applications (côté serveur seulement)              |
+| `PEXELS_API_KEY`                | pexels.com/api (côté serveur seulement)                               |
 
 Aucune clé n'est codée en dur dans le code — tout passe par ces variables.
 
