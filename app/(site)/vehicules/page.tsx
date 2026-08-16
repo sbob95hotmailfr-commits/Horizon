@@ -13,6 +13,9 @@ interface PageProps {
     debut?: string;
     fin?: string;
     lieu?: string;
+    lieuRetour?: string;
+    heureDebut?: string;
+    heureFin?: string;
   }>;
 }
 
@@ -41,7 +44,10 @@ export default async function VehiculesPage({ searchParams }: PageProps) {
           {params.lieu && (
             <p className="text-sm text-black/60">
               Retrait — {params.lieu}
+              {params.heureDebut && ` à ${params.heureDebut}`}
               {params.debut && params.fin && ` · du ${params.debut} au ${params.fin}`}
+              {params.heureFin && ` à ${params.heureFin}`}
+              {params.lieuRetour && ` · Retour — ${params.lieuRetour}`}
             </p>
           )}
         </div>

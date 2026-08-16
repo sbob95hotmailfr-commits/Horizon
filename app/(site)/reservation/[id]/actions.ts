@@ -7,6 +7,9 @@ export interface CreateBookingInput {
   startDate: string;
   endDate: string;
   pickupLocation: string;
+  pickupTime: string;
+  returnTime: string;
+  returnLocation: string | null;
   fullName: string;
   phone: string;
 }
@@ -39,6 +42,9 @@ export async function createBooking(input: CreateBookingInput): Promise<CreateBo
     start_date: input.startDate,
     end_date: input.endDate,
     pickup_location: input.pickupLocation,
+    pickup_time: input.pickupTime,
+    return_time: input.returnTime,
+    return_location: input.returnLocation,
     full_name: input.fullName.trim(),
     phone: input.phone.trim(),
     status: "en_attente",

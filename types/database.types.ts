@@ -57,6 +57,9 @@ export interface Database {
           start_date: string;
           end_date: string;
           pickup_location: string;
+          pickup_time: string;
+          return_time: string;
+          return_location: string | null;
           status: BookingStatus;
           full_name: string;
           phone: string;
@@ -69,6 +72,9 @@ export interface Database {
           start_date: string;
           end_date: string;
           pickup_location: string;
+          pickup_time?: string;
+          return_time?: string;
+          return_location?: string | null;
           status?: BookingStatus;
           full_name: string;
           phone: string;

@@ -6,9 +6,11 @@ import { ProgressBar } from "@/components/booking/ProgressBar";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { createBooking } from "@/app/(site)/reservation/[id]/actions";
-import { PICKUP_LOCATIONS } from "@/lib/constants";
+import { PICKUP_LOCATIONS, TIME_SLOTS, DEFAULT_TIME } from "@/lib/constants";
 import { formatPrice, formatDate } from "@/lib/utils";
 import type { Vehicle } from "@/types/database.types";
+
+type LocationTarget = "pickup" | "return" | null;
 
 export function BookingWizard({
   vehicle,
@@ -19,14 +21,18 @@ export function BookingWizard({
 }) {
   const router = useRouter();
   const [step, setStep] = useState(1);
-  const [locationModalOpen, setLocationModalOpen] = useState(false);
+  const [locationModalTarget, setLocationModalTarget] = useState<LocationTarget>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
 
   const [pickupLocation, setPickupLocation] = useState<string>(PICKUP_LOCATIONS[0]);
   const [startDate, setStartDate] = useState("");
+  const [startTime, setStartTime] = useState(DEFAULT_TIME);
   const [endDate, setEndDate] = useState("");
+  const [endTime, setEndTime] = useState(DEFAULT_TIME);
+  const [differentReturn, setDifferentReturn] = useState(false);
+  const [returnLocation, setReturnLocation] = useState<string>(PICKUP_LOCATIONS[1]);
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
 
@@ -61,6 +67,9 @@ export function BookingWizard({
       startDate,
       endDate,
       pickupLocation,
+      pickupTime: startTime,
+      returnTime: endTime,
+      returnLocation: differentReturn ? returnLocation : null,
       fullName,
       phone,
     });
@@ -108,6 +117,20 @@ export function BookingWizard({
               />
             </label>
             <label className="space-y-1 text-sm">
+              <span className="font-medium">Heure de départ</span>
+              <select
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                className="w-full rounded-lg border border-black/15 px-3 py-2"
+              >
+                {TIME_SLOTS.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="space-y-1 text-sm">
               <span className="font-medium">Date de retour</span>
               <input
                 type="date"
@@ -115,6 +138,20 @@ export function BookingWizard({
                 onChange={(e) => setEndDate(e.target.value)}
                 className="w-full rounded-lg border border-black/15 px-3 py-2"
               />
+            </label>
+            <label className="space-y-1 text-sm">
+              <span className="font-medium">Heure de retour</span>
+              <select
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+                className="w-full rounded-lg border border-black/15 px-3 py-2"
+              >
+                {TIME_SLOTS.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
             </label>
           </div>
 
@@ -125,12 +162,38 @@ export function BookingWizard({
             </div>
             <button
               type="button"
-              onClick={() => setLocationModalOpen(true)}
+              onClick={() => setLocationModalTarget("pickup")}
               className="text-sm font-medium text-accent hover:underline"
             >
               Modifier
             </button>
           </div>
+
+          <label className="flex items-center gap-2 text-sm text-black/70">
+            <input
+              type="checkbox"
+              checked={differentReturn}
+              onChange={(e) => setDifferentReturn(e.target.checked)}
+              className="accent-accent"
+            />
+            Restituer dans un lieu différent
+          </label>
+
+          {differentReturn && (
+            <div className="flex items-center justify-between rounded-lg border border-black/15 px-3 py-2">
+              <div>
+                <p className="text-xs font-medium text-black/50">Lieu de retour</p>
+                <p className="text-sm font-medium">{returnLocation}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setLocationModalTarget("return")}
+                className="text-sm font-medium text-accent hover:underline"
+              >
+                Modifier
+              </button>
+            </div>
+          )}
 
           <Button
             disabled={!canContinueStep1()}
@@ -182,8 +245,12 @@ export function BookingWizard({
         <div className="space-y-5">
           <div className="space-y-3 rounded-xl border border-black/10 p-4 text-sm">
             <Row label="Véhicule" value={`${vehicle.brand} ${vehicle.name}`} />
-            <Row label="Dates" value={`${formatDate(startDate)} → ${formatDate(endDate)} (${days} j)`} />
+            <Row
+              label="Dates"
+              value={`${formatDate(startDate)} ${startTime} → ${formatDate(endDate)} ${endTime} (${days} j)`}
+            />
             <Row label="Lieu de retrait" value={pickupLocation} />
+            {differentReturn && <Row label="Lieu de retour" value={returnLocation} />}
             <Row label="Conducteur" value={fullName} />
             <Row label="Téléphone" value={phone} />
             <Row
@@ -212,9 +279,9 @@ export function BookingWizard({
       )}
 
       <Modal
-        open={locationModalOpen}
-        onClose={() => setLocationModalOpen(false)}
-        title="Choisir un lieu de retrait"
+        open={locationModalTarget !== null}
+        onClose={() => setLocationModalTarget(null)}
+        title={locationModalTarget === "return" ? "Choisir un lieu de retour" : "Choisir un lieu de retrait"}
       >
         <div className="space-y-2">
           {PICKUP_LOCATIONS.map((loc) => (
@@ -222,8 +289,12 @@ export function BookingWizard({
               key={loc}
               type="button"
               onClick={() => {
-                setPickupLocation(loc);
-                setLocationModalOpen(false);
+                if (locationModalTarget === "return") {
+                  setReturnLocation(loc);
+                } else {
+                  setPickupLocation(loc);
+                }
+                setLocationModalTarget(null);
               }}
               className="w-full rounded-lg border border-black/10 px-3 py-2 text-left text-sm hover:border-black/30"
             >

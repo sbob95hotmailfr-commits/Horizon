@@ -36,8 +36,9 @@ export function BookingRow({ booking }: { booking: BookingWithVehicle }) {
           {booking.vehicle ? `${booking.vehicle.brand} ${booking.vehicle.name}` : "Véhicule"}
         </Link>
         <p className="text-sm text-black/50">
-          {formatDate(booking.start_date)} → {formatDate(booking.end_date)} ·{" "}
-          {booking.pickup_location}
+          {formatDate(booking.start_date)} {booking.pickup_time} → {formatDate(booking.end_date)}{" "}
+          {booking.return_time} · {booking.pickup_location}
+          {booking.return_location && ` (retour : ${booking.return_location})`}
         </p>
         {booking.vehicle && (
           <p className="text-sm text-black/50">
