@@ -10,7 +10,11 @@ const CATEGORY_KEYWORDS: Record<VehicleCategory, string> = {
   electrique: "electric car charging",
 };
 
-const HERO_QUERY = "Paris France street night";
+// Photo curée manuellement (recherche dynamique trop aléatoire pour
+// garantir la composition voulue : une voiture au premier plan avec vue
+// dégagée sur l'horizon parisien). Photo : Maria Lupan / Unsplash.
+const HERO_PHOTO_URL =
+  "https://images.unsplash.com/photo-1634048319540-645535208dc9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920";
 
 // Cache mémoire par instance de serveur — suffisant pour rester sous la
 // limite gratuite Unsplash (50 req/h) sur un même déploiement.
@@ -53,7 +57,6 @@ export function getVehiclePhotos(category: VehicleCategory, count = 6): Promise<
   return searchPhotos(CATEGORY_KEYWORDS[category], count);
 }
 
-export async function getHeroPhoto(): Promise<string | undefined> {
-  const [url] = await searchPhotos(HERO_QUERY, 1);
-  return url;
+export async function getHeroPhoto(): Promise<string> {
+  return HERO_PHOTO_URL;
 }
