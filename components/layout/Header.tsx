@@ -18,7 +18,7 @@ export async function Header() {
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
+        <nav className="hidden items-center gap-8 text-sm font-semibold tracking-tight md:flex">
           {NAV_LINKS.map((link) => (
             <Link key={link.href} href={link.href} className="hover:text-accent">
               {link.label}
@@ -30,7 +30,11 @@ export async function Header() {
           {user ? (
             <UserMenu />
           ) : (
-            <ButtonLink href="/connexion" variant="ghost">
+            <ButtonLink
+              href="/connexion"
+              variant="ghost"
+              className="font-semibold tracking-tight"
+            >
               Connexion
             </ButtonLink>
           )}

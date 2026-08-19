@@ -11,10 +11,10 @@ const CATEGORY_KEYWORDS: Record<VehicleCategory, string> = {
 };
 
 // Photo curée manuellement (recherche dynamique trop aléatoire pour
-// garantir la composition voulue : une voiture au premier plan avec vue
-// dégagée sur l'horizon parisien). Photo : Maria Lupan / Unsplash.
+// garantir la composition voulue : véhicules récents visibles, Paris,
+// avec l'Arc de Triomphe sur l'horizon). Photo : Louis / Pexels.
 const HERO_PHOTO_URL =
-  "https://images.unsplash.com/photo-1634048319540-645535208dc9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920";
+  "https://images.pexels.com/photos/14311173/pexels-photo-14311173.jpeg?auto=compress&cs=tinysrgb&w=1920";
 
 // Cache mémoire par instance de serveur — suffisant pour rester sous la
 // limite gratuite Unsplash (50 req/h) sur un même déploiement.
