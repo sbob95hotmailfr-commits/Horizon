@@ -5,7 +5,9 @@ import type { ButtonHTMLAttributes } from "react";
 type Variant = "primary" | "secondary" | "ghost";
 
 const VARIANT_CLASSES: Record<Variant, string> = {
-  primary: "bg-accent text-ivory hover:bg-accent/90",
+  // Texte noir plutôt qu'ivoire : le blanc sur l'orange de marque ne
+  // passe pas le contraste WCAG AA (2.7:1, il faut 4.5:1) ; le noir si.
+  primary: "bg-accent text-black hover:bg-accent/90",
   secondary: "bg-black text-ivory hover:bg-black/85",
   ghost: "border border-black/15 text-black hover:border-black/40",
 };

@@ -85,7 +85,7 @@ export function BookingWizard({
   if (done) {
     return (
       <div className="space-y-4 rounded-2xl border border-black/10 p-8 text-center">
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent text-ivory">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent text-black">
           ✓
         </div>
         <h2 className="text-xl font-semibold">Demande envoyée</h2>

@@ -18,6 +18,7 @@ const ITEMS = [
 export function TrustBand() {
   return (
     <section className="border-b border-black/10 py-14">
+      <h2 className="sr-only">Pourquoi choisir Horizon</h2>
       <Container className="grid grid-cols-1 gap-8 sm:grid-cols-3">
         {ITEMS.map((item) => (
           <div key={item.title} className="space-y-1.5">

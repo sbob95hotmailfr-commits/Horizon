@@ -44,7 +44,7 @@ export function VehicleCard({
 
       <div className="space-y-3 p-5">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-black/50">
+          <p className="text-xs font-medium uppercase tracking-wide text-black/65">
             {categoryLabel}
           </p>
           <h3 className="text-lg font-semibold">
