@@ -38,7 +38,7 @@ export default async function VehiculeDetailPage({ params }: PageProps) {
           <h1 className="text-3xl font-semibold">
             {vehicle.brand} {vehicle.name}
           </h1>
-          <p className="text-sm text-black/50">{vehicle.location}</p>
+          <p className="text-sm text-black/65">{vehicle.location}</p>
         </div>
 
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.6fr_1fr]">

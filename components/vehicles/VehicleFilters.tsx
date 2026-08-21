@@ -61,7 +61,7 @@ export function VehicleFilters() {
 function FilterGroup({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="text-xs font-medium uppercase tracking-wide text-black/40">
+      <span className="text-xs font-medium uppercase tracking-wide text-black/60">
         {label}
       </span>
       {children}

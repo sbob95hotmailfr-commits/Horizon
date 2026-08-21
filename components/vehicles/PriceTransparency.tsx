@@ -8,7 +8,7 @@ export function PriceTransparency({ vehicle }: { vehicle: Vehicle }) {
         <span className="text-3xl font-semibold">
           {formatPrice(vehicle.price_per_day)}
         </span>
-        <span className="text-sm text-black/50">par jour</span>
+        <span className="text-sm text-black/65">par jour</span>
       </div>
 
       <ul className="space-y-2 text-sm">
@@ -23,7 +23,7 @@ export function PriceTransparency({ vehicle }: { vehicle: Vehicle }) {
         <TransparencyItem>Carburant à restituer au niveau du retrait</TransparencyItem>
       </ul>
 
-      <p className="text-xs text-black/40">
+      <p className="text-xs text-black/60">
         Sans frais cachés — le prix affiché est le prix payé.
       </p>
     </div>

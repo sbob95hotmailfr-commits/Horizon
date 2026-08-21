@@ -38,7 +38,7 @@ export function AvailabilityCalendar({ bookedRanges }: { bookedRanges: BookedRan
         <button
           type="button"
           onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1))}
-          className="rounded-full px-2 py-1 text-black/50 hover:bg-black/5"
+          className="rounded-full px-2 py-1 text-black/60 hover:bg-black/5"
           aria-label="Mois précédent"
         >
           ‹
@@ -47,7 +47,7 @@ export function AvailabilityCalendar({ bookedRanges }: { bookedRanges: BookedRan
         <button
           type="button"
           onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1))}
-          className="rounded-full px-2 py-1 text-black/50 hover:bg-black/5"
+          className="rounded-full px-2 py-1 text-black/60 hover:bg-black/5"
           aria-label="Mois suivant"
         >
           ›
@@ -56,7 +56,7 @@ export function AvailabilityCalendar({ bookedRanges }: { bookedRanges: BookedRan
 
       <div className="grid grid-cols-7 gap-1 text-center text-xs">
         {WEEKDAYS.map((d, i) => (
-          <span key={i} className="py-1 text-black/40">
+          <span key={i} className="py-1 text-black/60">
             {d}
           </span>
         ))}
@@ -69,8 +69,8 @@ export function AvailabilityCalendar({ bookedRanges }: { bookedRanges: BookedRan
               key={i}
               className={cn(
                 "flex h-8 items-center justify-center rounded-full",
-                past && "text-black/20",
-                booked && !past && "bg-black/10 text-black/40 line-through",
+                past && "text-black/35",
+                booked && !past && "bg-black/10 text-black/60 line-through",
                 !booked && !past && "text-black",
               )}
             >
@@ -80,7 +80,7 @@ export function AvailabilityCalendar({ bookedRanges }: { bookedRanges: BookedRan
         })}
       </div>
 
-      <p className="mt-3 text-xs text-black/40">Jours barrés = déjà réservés</p>
+      <p className="mt-3 text-xs text-black/60">Jours barrés = déjà réservés</p>
     </div>
   );
 }

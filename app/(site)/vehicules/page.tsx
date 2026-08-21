@@ -60,6 +60,7 @@ export default async function VehiculesPage({ searchParams }: PageProps) {
           <EmptyState />
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <h2 className="sr-only">Résultats</h2>
             {withImages.map(({ vehicle, imageUrl }) => (
               <VehicleCard key={vehicle.id} vehicle={vehicle} imageUrl={imageUrl} />
             ))}
@@ -74,7 +75,7 @@ function EmptyState() {
   return (
     <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed border-black/15 py-24 text-center">
       <p className="text-lg font-medium">Aucun véhicule ne correspond à votre recherche</p>
-      <p className="text-sm text-black/50">
+      <p className="text-sm text-black/65">
         Essayez d&apos;élargir vos critères de catégorie, de prix ou de dates.
       </p>
     </div>

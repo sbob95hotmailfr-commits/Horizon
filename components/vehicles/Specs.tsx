@@ -16,7 +16,7 @@ export function Specs({ vehicle }: { vehicle: Vehicle }) {
     <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
       {items.map((item) => (
         <div key={item.label} className="rounded-xl border border-black/10 p-4">
-          <dt className="text-xs font-medium uppercase tracking-wide text-black/40">
+          <dt className="text-xs font-medium uppercase tracking-wide text-black/60">
             {item.label}
           </dt>
           <dd className="mt-1 text-base font-semibold">{item.value}</dd>

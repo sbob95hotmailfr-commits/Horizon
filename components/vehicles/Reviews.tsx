@@ -9,7 +9,7 @@ export function Reviews() {
     <section className="space-y-5">
       <div className="flex items-baseline gap-2">
         <h2 className="text-xl font-semibold">Avis clients</h2>
-        <span className="text-sm text-black/50">
+        <span className="text-sm text-black/65">
           {average.toFixed(1)}/5 · {reviews.length} avis
         </span>
       </div>
@@ -25,7 +25,7 @@ export function Reviews() {
               </span>
             </div>
             <p className="mt-2 text-sm text-black/70">{review.comment}</p>
-            <p className="mt-2 text-xs text-black/40">{formatDate(review.date)}</p>
+            <p className="mt-2 text-xs text-black/60">{formatDate(review.date)}</p>
           </div>
         ))}
       </div>
