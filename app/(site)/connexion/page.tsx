@@ -6,6 +6,19 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase/client";
 
+function translateSignUpError(message: string): string {
+  if (message.includes("already registered")) {
+    return "Un compte existe déjà avec cet email. Connectez-vous plutôt.";
+  }
+  if (message.includes("Password should be at least")) {
+    return "Le mot de passe doit contenir au moins 6 caractères.";
+  }
+  if (message.includes("Unable to validate email address") || message.includes("invalid")) {
+    return "Adresse email invalide.";
+  }
+  return "Une erreur est survenue. Réessayez.";
+}
+
 function ConnexionForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -39,7 +52,7 @@ function ConnexionForm() {
       const { data, error } = await supabase.auth.signUp({ email, password });
       setLoading(false);
       if (error) {
-        setError(error.message);
+        setError(translateSignUpError(error.message));
         return;
       }
       if (data.session) {
