@@ -10,7 +10,7 @@ export function Testimonials() {
       <Container className="space-y-10">
         <div className="flex items-baseline gap-2">
           <h2 className="text-2xl font-semibold sm:text-3xl">Ce qu&apos;en disent nos clients</h2>
-          <span className="text-sm text-black/50">
+          <span className="text-sm text-black/65">
             {average.toFixed(1)}/5 · {reviews.length} avis
           </span>
         </div>
