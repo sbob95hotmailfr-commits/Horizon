@@ -36,10 +36,17 @@ function ConnexionForm() {
       router.push(redirectTo);
       router.refresh();
     } else {
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await supabase.auth.signUp({ email, password });
       setLoading(false);
       if (error) {
         setError(error.message);
+        return;
+      }
+      if (data.session) {
+        // Confirmation email désactivée côté Supabase — le compte est
+        // actif et connecté immédiatement, aucun email n'est envoyé.
+        router.push(redirectTo);
+        router.refresh();
         return;
       }
       setInfo("Compte créé. Vérifiez votre boîte mail pour confirmer votre adresse.");

@@ -11,7 +11,7 @@ export function Hero({ imageUrl }: { imageUrl?: string }) {
           fill
           priority
           sizes="100vw"
-          className="object-cover opacity-80"
+          className="object-cover grayscale"
         />
       )}
       <div className="absolute inset-0 bg-black/60" />
