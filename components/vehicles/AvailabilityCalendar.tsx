@@ -69,7 +69,7 @@ export function AvailabilityCalendar({ bookedRanges }: { bookedRanges: BookedRan
               key={i}
               className={cn(
                 "flex h-8 items-center justify-center rounded-full",
-                past && "text-black/35",
+                past && "text-black/60",
                 booked && !past && "bg-black/10 text-black/60 line-through",
                 !booked && !past && "text-black",
               )}

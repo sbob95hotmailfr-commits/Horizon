@@ -36,6 +36,8 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
               key={src}
               type="button"
               onClick={() => setActive(i)}
+              aria-label={`Photo ${i + 1} sur ${images.length}`}
+              aria-pressed={i === active}
               className={cn(
                 "relative h-16 w-24 shrink-0 overflow-hidden rounded-lg",
                 i === active ? "ring-2 ring-accent" : "opacity-70 hover:opacity-100",
