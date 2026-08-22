@@ -296,7 +296,7 @@ export function BookingWizard({
                 }
                 setLocationModalTarget(null);
               }}
-              className="w-full rounded-lg border border-black/10 px-3 py-2 text-left text-sm hover:border-black/30"
+              className="w-full rounded-lg border border-black/10 px-3 py-2 text-left text-sm hover:border-accent"
             >
               {loc}
             </button>

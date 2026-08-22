@@ -42,9 +42,9 @@ export function Faq() {
         <div className="divide-y divide-black/10 border-t border-black/10">
           {QUESTIONS.map((item) => (
             <details key={item.question} className="group py-5">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium hover:text-accent">
                 {item.question}
-                <span className="shrink-0 text-black/40 transition-transform group-open:rotate-45">
+                <span className="shrink-0 text-black/40 transition-transform group-open:rotate-45 group-hover:text-accent">
                   +
                 </span>
               </summary>

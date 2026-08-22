@@ -8,8 +8,8 @@ const VARIANT_CLASSES: Record<Variant, string> = {
   // Texte noir plutôt qu'ivoire : le blanc sur l'orange de marque ne
   // passe pas le contraste WCAG AA (2.7:1, il faut 4.5:1) ; le noir si.
   primary: "bg-accent text-black hover:bg-accent/90",
-  secondary: "bg-black text-ivory hover:bg-black/85",
-  ghost: "border border-black/15 text-black hover:border-black/40",
+  secondary: "bg-black text-ivory hover:bg-accent hover:text-black",
+  ghost: "border border-black/15 text-black hover:border-accent hover:text-accent",
 };
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

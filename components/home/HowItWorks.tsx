@@ -24,8 +24,7 @@ export function HowItWorks() {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
           {STEPS.map((step, i) => (
             <div key={step.title} className="space-y-3">
-              <span className="flex items-center gap-2 text-sm font-semibold text-black">
-                <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
+              <span className="text-sm font-semibold text-black/70">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h3 className="text-lg font-semibold">{step.title}</h3>

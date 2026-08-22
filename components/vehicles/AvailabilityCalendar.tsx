@@ -38,7 +38,7 @@ export function AvailabilityCalendar({ bookedRanges }: { bookedRanges: BookedRan
         <button
           type="button"
           onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1))}
-          className="rounded-full px-2 py-1 text-black/60 hover:bg-black/5"
+          className="rounded-full px-2 py-1 text-black/60 hover:bg-black/5 hover:text-accent"
           aria-label="Mois précédent"
         >
           ‹
@@ -47,7 +47,7 @@ export function AvailabilityCalendar({ bookedRanges }: { bookedRanges: BookedRan
         <button
           type="button"
           onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1))}
-          className="rounded-full px-2 py-1 text-black/60 hover:bg-black/5"
+          className="rounded-full px-2 py-1 text-black/60 hover:bg-black/5 hover:text-accent"
           aria-label="Mois suivant"
         >
           ›

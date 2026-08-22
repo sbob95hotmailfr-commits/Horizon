@@ -106,7 +106,7 @@ function ConnexionForm() {
                 onClick={() => setShowPassword((v) => !v)}
                 aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
                 aria-pressed={showPassword}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-black/40 hover:text-black"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-black/40 hover:text-accent"
               >
                 {showPassword ? <EyeOffIcon /> : <EyeIcon />}
               </button>
@@ -166,7 +166,9 @@ function TabButton({
       type="button"
       onClick={onClick}
       className={`-mb-px border-b-2 pb-3 text-sm font-medium ${
-        active ? "border-accent text-black" : "border-transparent text-black/40"
+        active
+          ? "border-accent text-black"
+          : "border-transparent text-black/40 hover:text-accent"
       }`}
     >
       {children}

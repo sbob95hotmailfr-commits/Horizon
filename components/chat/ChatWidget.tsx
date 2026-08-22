@@ -72,7 +72,7 @@ export function ChatWidget() {
             <button
               onClick={() => setOpen(false)}
               aria-label="Fermer le chat"
-              className="text-black/40 hover:text-black"
+              className="text-black/40 hover:text-accent"
             >
               ✕
             </button>
@@ -109,7 +109,7 @@ export function ChatWidget() {
             <button
               type="submit"
               disabled={loading}
-              className="rounded-full bg-accent px-4 py-2 text-sm font-semibold text-black disabled:opacity-50"
+              className="rounded-full bg-accent px-4 py-2 text-sm font-semibold text-black hover:bg-accent/90 disabled:opacity-50"
             >
               Envoyer
             </button>
@@ -120,7 +120,7 @@ export function ChatWidget() {
       <button
         onClick={() => setOpen((v) => !v)}
         aria-label="Ouvrir le conseiller Horizon"
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-black text-ivory transition-transform hover:scale-105"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-black text-ivory transition-all hover:scale-105 hover:bg-accent hover:text-black"
       >
         <Monogram className="h-6 w-6" />
       </button>

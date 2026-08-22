@@ -65,7 +65,7 @@ export function BookingRow({ booking }: { booking: BookingWithVehicle }) {
                 if (result.success) setCancelled(true);
               })
             }
-            className="text-sm text-black/40 underline decoration-black/20 hover:text-black"
+            className="text-sm text-black/40 underline decoration-black/20 hover:text-accent"
           >
             Annuler
           </button>

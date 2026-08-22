@@ -19,7 +19,7 @@ export function VehicleCard({
   return (
     <Link
       href={`/vehicules/${vehicle.id}`}
-      className="group block overflow-hidden rounded-2xl border border-black/10 bg-white transition-colors hover:border-black/25"
+      className="group block overflow-hidden rounded-2xl border border-black/10 bg-white transition-colors hover:border-accent"
     >
       <div className="relative aspect-[4/3] w-full bg-black/5">
         {imageUrl ? (
