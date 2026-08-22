@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { PICKUP_LOCATIONS, VEHICLE_CATEGORIES, TIME_SLOTS, DEFAULT_TIME } from "@/lib/constants";
+import { PICKUP_LOCATIONS, CAR_CATEGORIES, TIME_SLOTS, DEFAULT_TIME } from "@/lib/constants";
 import { Button } from "@/components/ui/Button";
 
 export function SearchBar() {
@@ -56,7 +56,7 @@ export function SearchBar() {
             className="w-full bg-transparent text-sm font-medium outline-none"
           >
             <option value="">Toutes</option>
-            {VEHICLE_CATEGORIES.map((c) => (
+            {CAR_CATEGORIES.map((c) => (
               <option key={c.value} value={c.value}>
                 {c.label}
               </option>

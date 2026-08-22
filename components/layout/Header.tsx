@@ -6,6 +6,8 @@ import { getCurrentUser } from "@/lib/auth";
 
 const NAV_LINKS = [
   { href: "/vehicules", label: "Véhicules" },
+  { href: "/utilitaires", label: "Utilitaires" },
+  { href: "/compte/reservations", label: "Réservations" },
 ];
 
 export async function Header() {
@@ -35,7 +37,7 @@ export async function Header() {
               variant="ghost"
               className="font-semibold tracking-tight"
             >
-              Connexion
+              Connexion / Inscription
             </ButtonLink>
           )}
         </div>

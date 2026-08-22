@@ -4,6 +4,7 @@ import type { Vehicle, VehicleCategory } from "@/types/database.types";
 
 export interface VehicleFilters {
   category?: VehicleCategory;
+  categories?: VehicleCategory[];
   maxPrice?: number;
   startDate?: string;
   endDate?: string;
@@ -13,6 +14,9 @@ export async function getVehicles(filters: VehicleFilters = {}): Promise<Vehicle
   const supabase = await createClient();
   let query = supabase.from("vehicles").select("*").eq("available", true);
 
+  if (filters.categories) {
+    query = query.in("category", filters.categories);
+  }
   if (filters.category) {
     query = query.eq("category", filters.category);
   }

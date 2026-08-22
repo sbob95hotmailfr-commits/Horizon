@@ -4,8 +4,7 @@ import { VehicleCard } from "@/components/vehicles/VehicleCard";
 import { VehicleFilters } from "@/components/vehicles/VehicleFilters";
 import { getVehicles } from "@/lib/vehicles";
 import { resolveVehicleImages } from "@/lib/vehicle-images";
-import { CAR_CATEGORIES } from "@/lib/constants";
-import type { VehicleCategory } from "@/types/database.types";
+import { UTILITY_CATEGORIES } from "@/lib/constants";
 
 interface PageProps {
   searchParams: Promise<{
@@ -20,12 +19,11 @@ interface PageProps {
   }>;
 }
 
-export default async function VehiculesPage({ searchParams }: PageProps) {
+export default async function UtilitairesPage({ searchParams }: PageProps) {
   const params = await searchParams;
 
   const vehicles = await getVehicles({
-    categories: CAR_CATEGORIES.map((c) => c.value),
-    category: params.categorie as VehicleCategory | undefined,
+    categories: UTILITY_CATEGORIES.map((c) => c.value),
     maxPrice: params.prixMax ? Number(params.prixMax) : undefined,
     startDate: params.debut,
     endDate: params.fin,
@@ -42,7 +40,7 @@ export default async function VehiculesPage({ searchParams }: PageProps) {
     <div className="py-12">
       <Container className="space-y-8">
         <div className="space-y-2">
-          <h1 className="text-3xl font-semibold">Nos véhicules</h1>
+          <h1 className="text-3xl font-semibold">Nos utilitaires</h1>
           {params.lieu && (
             <p className="text-sm text-black/60">
               Retrait — {params.lieu}
@@ -55,7 +53,7 @@ export default async function VehiculesPage({ searchParams }: PageProps) {
         </div>
 
         <Suspense>
-          <VehicleFilters categories={CAR_CATEGORIES} basePath="/vehicules" />
+          <VehicleFilters categories={UTILITY_CATEGORIES} basePath="/utilitaires" />
         </Suspense>
 
         {withImages.length === 0 ? (
@@ -76,9 +74,9 @@ export default async function VehiculesPage({ searchParams }: PageProps) {
 function EmptyState() {
   return (
     <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed border-black/15 py-24 text-center">
-      <p className="text-lg font-medium">Aucun véhicule ne correspond à votre recherche</p>
+      <p className="text-lg font-medium">Aucun utilitaire ne correspond à votre recherche</p>
       <p className="text-sm text-black/65">
-        Essayez d&apos;élargir vos critères de catégorie, de prix ou de dates.
+        Essayez d&apos;élargir vos critères de prix ou de dates.
       </p>
     </div>
   );

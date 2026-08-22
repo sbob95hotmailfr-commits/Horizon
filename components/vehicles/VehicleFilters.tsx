@@ -1,12 +1,18 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { VEHICLE_CATEGORIES } from "@/lib/constants";
+import type { VehicleCategory } from "@/types/database.types";
 import { cn } from "@/lib/utils";
 
 const PRICE_CAPS = [50, 80, 120] as const;
 
-export function VehicleFilters() {
+export function VehicleFilters({
+  categories,
+  basePath,
+}: {
+  categories: { value: VehicleCategory; label: string }[];
+  basePath: string;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -20,25 +26,27 @@ export function VehicleFilters() {
     } else {
       params.delete(key);
     }
-    router.push(`/vehicules?${params.toString()}`);
+    router.push(`${basePath}?${params.toString()}`);
   }
 
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <FilterGroup label="Catégorie">
-        <Chip active={activeCategory === ""} onClick={() => updateParam("categorie", "")}>
-          Toutes
-        </Chip>
-        {VEHICLE_CATEGORIES.map((c) => (
-          <Chip
-            key={c.value}
-            active={activeCategory === c.value}
-            onClick={() => updateParam("categorie", c.value)}
-          >
-            {c.label}
+      {categories.length > 1 && (
+        <FilterGroup label="Catégorie">
+          <Chip active={activeCategory === ""} onClick={() => updateParam("categorie", "")}>
+            Toutes
           </Chip>
-        ))}
-      </FilterGroup>
+          {categories.map((c) => (
+            <Chip
+              key={c.value}
+              active={activeCategory === c.value}
+              onClick={() => updateParam("categorie", c.value)}
+            >
+              {c.label}
+            </Chip>
+          ))}
+        </FilterGroup>
+      )}
 
       <FilterGroup label="Prix max / jour">
         <Chip active={activeMaxPrice === ""} onClick={() => updateParam("prixMax", "")}>
@@ -86,7 +94,7 @@ function Chip({
         "rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
         active
           ? "border-black bg-black text-ivory"
-          : "border-black/15 text-black/70 hover:border-black/40",
+          : "border-black/15 text-black/70 hover:border-accent hover:text-accent",
       )}
     >
       {children}

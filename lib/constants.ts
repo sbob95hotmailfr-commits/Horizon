@@ -21,6 +21,11 @@ export const VEHICLE_CATEGORIES: { value: VehicleCategory; label: string }[] = [
   { value: "electrique", label: "Électrique" },
 ];
 
+// Regroupement utilisé pour séparer le catalogue "Véhicules" (voitures)
+// de la page "Utilitaires" dans la navigation.
+export const CAR_CATEGORIES = VEHICLE_CATEGORIES.filter((c) => c.value !== "utilitaire");
+export const UTILITY_CATEGORIES = VEHICLE_CATEGORIES.filter((c) => c.value === "utilitaire");
+
 export const TRANSMISSIONS: { value: Transmission; label: string }[] = [
   { value: "manuelle", label: "Manuelle" },
   { value: "automatique", label: "Automatique" },
