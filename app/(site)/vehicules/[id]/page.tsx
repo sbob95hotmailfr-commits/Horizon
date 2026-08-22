@@ -6,7 +6,7 @@ import { Gallery } from "@/components/vehicles/Gallery";
 import { Specs } from "@/components/vehicles/Specs";
 import { PriceTransparency } from "@/components/vehicles/PriceTransparency";
 import { Reviews } from "@/components/vehicles/Reviews";
-import { AvailabilityCalendar } from "@/components/vehicles/AvailabilityCalendar";
+import { AvailabilityCalendarLazy } from "@/components/vehicles/AvailabilityCalendarLazy";
 import { getVehicleById, getVehicleBookedRanges } from "@/lib/vehicles";
 import { resolveVehicleImages } from "@/lib/vehicle-images";
 import { VEHICLE_CATEGORIES } from "@/lib/constants";
@@ -54,7 +54,7 @@ export default async function VehiculeDetailPage({ params }: PageProps) {
             <ButtonLink href={`/reservation/${vehicle.id}`} className="w-full">
               Demander une réservation
             </ButtonLink>
-            <AvailabilityCalendar bookedRanges={bookedRanges} />
+            <AvailabilityCalendarLazy bookedRanges={bookedRanges} />
           </div>
         </div>
       </Container>
