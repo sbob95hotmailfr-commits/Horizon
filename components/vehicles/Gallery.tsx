@@ -24,6 +24,7 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
           alt={alt}
           fill
           priority
+          draggable={false}
           sizes="(min-width: 1024px) 60vw, 100vw"
           className="object-cover"
         />
@@ -43,7 +44,7 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
                 i === active ? "ring-2 ring-accent" : "opacity-70 hover:opacity-100",
               )}
             >
-              <Image src={src} alt="" fill sizes="96px" className="object-cover" />
+              <Image src={src} alt="" fill draggable={false} sizes="96px" className="object-cover" />
             </button>
           ))}
         </div>

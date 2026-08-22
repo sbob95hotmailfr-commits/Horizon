@@ -31,3 +31,13 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
+
+/*
+ * Les <img> (photos véhicules, hero...) sont "draggable" par défaut
+ * dans les navigateurs : un clic-glissé les fait suivre la souris
+ * comme un objet qu'on déplace. On désactive ce comportement natif.
+ */
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}

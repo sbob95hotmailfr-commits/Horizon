@@ -10,6 +10,7 @@ export function Hero({ imageUrl }: { imageUrl?: string }) {
           alt="Véhicule Horizon"
           fill
           priority
+          draggable={false}
           sizes="100vw"
           className="object-cover"
         />
