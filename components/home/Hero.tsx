@@ -14,7 +14,7 @@ export function Hero({ imageUrl }: { imageUrl?: string }) {
           className="object-cover"
         />
       )}
-      <div className="absolute inset-0 bg-black/60" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 
       <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-16 pt-32">
         <div className="max-w-xl space-y-4 text-ivory">
