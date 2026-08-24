@@ -28,13 +28,6 @@ export function UserMenu() {
       {open && (
         <div className="absolute right-0 mt-2 w-48 rounded-xl border border-black/15 bg-white py-2">
           <Link
-            href="/compte/reservations"
-            onClick={() => setOpen(false)}
-            className="block px-4 py-2 text-sm hover:bg-black/5 hover:text-accent"
-          >
-            Mes réservations
-          </Link>
-          <Link
             href="/compte/preferences"
             onClick={() => setOpen(false)}
             className="block px-4 py-2 text-sm hover:bg-black/5 hover:text-accent"
