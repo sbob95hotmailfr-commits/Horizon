@@ -17,7 +17,7 @@ export function Hero({ imageUrl }: { imageUrl?: string }) {
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 
-      <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-16 pt-32">
+      <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-24 pt-32">
         <div className="max-w-xl space-y-4 text-ivory">
           <h1 className="text-4xl font-semibold leading-[1.05] sm:text-5xl">
             Louez la voiture qu&apos;il vous faut, à Paris.
