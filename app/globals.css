@@ -21,6 +21,10 @@
   --font-sans: var(--font-manrope);
 }
 
+html {
+  overflow-x: hidden;
+}
+
 html,
 body {
   overscroll-behavior: none;
