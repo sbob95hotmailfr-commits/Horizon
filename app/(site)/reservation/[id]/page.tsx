@@ -25,7 +25,7 @@ export default async function ReservationPage({ params }: PageProps) {
     <div className="py-12">
       <Container className="max-w-2xl space-y-8">
         <div>
-          <p className="text-sm text-black/50">Demande de réservation</p>
+          <p className="text-sm text-black/65">Demande de réservation</p>
           <h1 className="text-2xl font-semibold">
             {vehicle.brand} {vehicle.name}
           </h1>

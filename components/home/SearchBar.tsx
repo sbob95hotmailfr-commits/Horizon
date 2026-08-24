@@ -148,7 +148,7 @@ export function SearchBar() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="flex flex-col gap-1 rounded-xl px-3 py-2 lg:border-r lg:border-black/10 lg:last-of-type:border-r-0">
-      <span className="text-[11px] font-medium uppercase tracking-wide text-black/45">
+      <span className="text-[11px] font-medium uppercase tracking-wide text-black/60">
         {label}
       </span>
       {children}

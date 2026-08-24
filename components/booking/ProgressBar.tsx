@@ -12,7 +12,7 @@ export function ProgressBar({ step }: { step: number }) {
           />
         ))}
       </div>
-      <p className="text-xs font-medium text-black/50">
+      <p className="text-xs font-medium text-black/65">
         Étape {step}/{STEPS.length} — {STEPS[step - 1]}
       </p>
     </div>

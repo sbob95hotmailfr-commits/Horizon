@@ -24,7 +24,7 @@ export default async function PreferencesPage() {
       <Container className="max-w-2xl space-y-8">
         <div>
           <h1 className="text-2xl font-semibold">Préférences de marques</h1>
-          <p className="text-sm text-black/50">
+          <p className="text-sm text-black/65">
             Facultatif — affine les recommandations du conseiller Horizon.
           </p>
         </div>

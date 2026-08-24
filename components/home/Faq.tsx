@@ -44,7 +44,7 @@ export function Faq() {
             <details key={item.question} className="group py-5">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium hover:text-accent">
                 {item.question}
-                <span className="shrink-0 text-black/40 transition-transform group-open:rotate-45 group-hover:text-accent">
+                <span className="shrink-0 text-black/60 transition-transform group-open:rotate-45 group-hover:text-accent">
                   +
                 </span>
               </summary>

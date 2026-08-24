@@ -17,7 +17,7 @@ const STATUS_CLASSES: Record<BookingWithVehicle["status"], string> = {
   en_attente: "bg-black/10 text-black/70",
   confirmee: "bg-black text-ivory",
   refusee: "border border-black/20 text-black/60",
-  annulee: "bg-black/5 text-black/40",
+  annulee: "bg-black/5 text-black/60",
 };
 
 export function BookingRow({ booking }: { booking: BookingWithVehicle }) {
@@ -35,13 +35,13 @@ export function BookingRow({ booking }: { booking: BookingWithVehicle }) {
         >
           {booking.vehicle ? `${booking.vehicle.brand} ${booking.vehicle.name}` : "Véhicule"}
         </Link>
-        <p className="text-sm text-black/50">
+        <p className="text-sm text-black/65">
           {formatDate(booking.start_date)} {booking.pickup_time} → {formatDate(booking.end_date)}{" "}
           {booking.return_time} · {booking.pickup_location}
           {booking.return_location && ` (retour : ${booking.return_location})`}
         </p>
         {booking.vehicle && (
-          <p className="text-sm text-black/50">
+          <p className="text-sm text-black/65">
             {formatPrice(booking.vehicle.price_per_day)}/jour
           </p>
         )}
@@ -65,7 +65,7 @@ export function BookingRow({ booking }: { booking: BookingWithVehicle }) {
                 if (result.success) setCancelled(true);
               })
             }
-            className="text-sm text-black/40 underline decoration-black/20 hover:text-accent"
+            className="text-sm text-black/60 underline decoration-black/20 hover:text-accent"
           >
             Annuler
           </button>

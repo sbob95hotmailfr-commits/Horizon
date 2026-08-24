@@ -72,7 +72,7 @@ export function ChatWidget() {
             <button
               onClick={() => setOpen(false)}
               aria-label="Fermer le chat"
-              className="text-black/40 hover:text-accent"
+              className="text-black/60 hover:text-accent"
             >
               ✕
             </button>
@@ -93,7 +93,7 @@ export function ChatWidget() {
               </div>
             ))}
             {loading && (
-              <div className="max-w-[85%] rounded-xl bg-black/5 px-3 py-2 text-sm text-black/50">
+              <div className="max-w-[85%] rounded-xl bg-black/5 px-3 py-2 text-sm text-black/65">
                 …
               </div>
             )}

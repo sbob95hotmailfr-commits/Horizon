@@ -87,7 +87,7 @@ function BrandGroup({
     <div className="space-y-3">
       <div>
         <h2 className="font-semibold">{title}</h2>
-        <p className="text-sm text-black/50">{description}</p>
+        <p className="text-sm text-black/65">{description}</p>
       </div>
       <div className="flex flex-wrap gap-2">
         {brands.map((brand) => {

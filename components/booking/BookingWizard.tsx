@@ -157,7 +157,7 @@ export function BookingWizard({
 
           <div className="flex items-center justify-between rounded-lg border border-black/15 px-3 py-2">
             <div>
-              <p className="text-xs font-medium text-black/50">Lieu de retrait</p>
+              <p className="text-xs font-medium text-black/65">Lieu de retrait</p>
               <p className="text-sm font-medium">{pickupLocation}</p>
             </div>
             <button
@@ -182,7 +182,7 @@ export function BookingWizard({
           {differentReturn && (
             <div className="flex items-center justify-between rounded-lg border border-black/15 px-3 py-2">
               <div>
-                <p className="text-xs font-medium text-black/50">Lieu de retour</p>
+                <p className="text-xs font-medium text-black/65">Lieu de retour</p>
                 <p className="text-sm font-medium">{returnLocation}</p>
               </div>
               <button
@@ -318,7 +318,7 @@ function Row({
 }) {
   return (
     <div className="flex items-center justify-between">
-      <span className="text-black/50">{label}</span>
+      <span className="text-black/65">{label}</span>
       <span className={emphasis ? "text-base font-semibold" : "font-medium"}>{value}</span>
     </div>
   );
