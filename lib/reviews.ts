@@ -10,20 +10,37 @@ const SAMPLE_REVIEWS: Review[] = [
   {
     author: "Camille D.",
     rating: 5,
-    comment: "Voiture impeccable, prise en charge rapide à la gare de Lyon. Je recommande.",
+    comment:
+      "Model 3 récupérée à CDG en 10 minutes chrono après un vol de nuit, direct sur le périph. Autonomie largement tenue jusqu'à Reims.",
     date: "2026-06-12",
   },
   {
     author: "Yassine B.",
     rating: 4,
-    comment: "Très bon rapport qualité/prix, juste un léger retard au retrait.",
+    comment:
+      "Sportage nickel pour un déplacement pro à 5, juste 15 minutes d'attente au retrait porte de Vincennes un vendredi soir.",
     date: "2026-05-28",
   },
   {
     author: "Élodie M.",
     rating: 5,
-    comment: "Parfait pour notre week-end en famille, kilométrage largement suffisant.",
+    comment:
+      "Mini Cabriolet pour un weekend improvisé en Île-de-France, le kilométrage inclus était largement suffisant pour nos allers-retours.",
     date: "2026-04-03",
+  },
+  {
+    author: "Thomas R.",
+    rating: 5,
+    comment:
+      "Loué le Trafic pour un déménagement sur Orly, volume parfait pour un F3 et pas de mauvaise surprise sur la caution annoncée.",
+    date: "2026-03-19",
+  },
+  {
+    author: "Sofia K.",
+    rating: 5,
+    comment:
+      "Première location de ma vie, j'appréhendais la paperasse mais tout s'est fait en dix minutes à la gare du Nord avec juste ma CB et mon permis.",
+    date: "2026-02-08",
   },
 ];
 
