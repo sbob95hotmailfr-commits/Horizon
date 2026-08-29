@@ -16,3 +16,14 @@ export async function getUserBookings(): Promise<BookingWithVehicle[]> {
   if (error) throw error;
   return (data ?? []) as unknown as BookingWithVehicle[];
 }
+
+/**
+ * Réservé à l'admin : la RLS "bookings_select_admin" fait qu'un compte
+ * admin reçoit ici toutes les demandes (et pas seulement les siennes).
+ * Pour un compte non-admin, cette requête ne renvoie que ses propres
+ * réservations — la page appelante doit donc vérifier le rôle avant
+ * d'utiliser ce résultat comme une vue globale.
+ */
+export async function getAllBookings(): Promise<BookingWithVehicle[]> {
+  return getUserBookings();
+}

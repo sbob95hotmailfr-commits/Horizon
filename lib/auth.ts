@@ -18,3 +18,25 @@ export async function getCurrentUser(): Promise<User | null> {
     return null;
   }
 }
+
+/**
+ * Utilisateur courant + son rôle, pour les pages protégées de l'admin.
+ * Ne s'appuie pas sur la RLS de `profiles` (qui bloque déjà l'accès
+ * aux autres comptes) : sert uniquement à décider quoi afficher/rediriger.
+ */
+export async function getCurrentUserWithRole(): Promise<{ user: User; isAdmin: boolean } | null> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return null;
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  return { user, isAdmin: profile?.role === "admin" };
+}

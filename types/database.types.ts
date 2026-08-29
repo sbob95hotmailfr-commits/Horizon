@@ -9,6 +9,7 @@ export type VehicleCategory =
 export type Transmission = "manuelle" | "automatique";
 export type FuelType = "essence" | "diesel" | "electrique" | "hybride";
 export type BookingStatus = "en_attente" | "confirmee" | "refusee" | "annulee";
+export type ProfileRole = "user" | "admin";
 
 export interface Database {
   public: {
@@ -91,6 +92,7 @@ export interface Database {
           phone: string | null;
           preferred_brands: string[];
           avoided_brands: string[];
+          role: ProfileRole;
           created_at: string;
         };
         Insert: {
@@ -100,6 +102,7 @@ export interface Database {
           phone?: string | null;
           preferred_brands?: string[];
           avoided_brands?: string[];
+          role?: ProfileRole;
           created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["profiles"]["Insert"]>;
