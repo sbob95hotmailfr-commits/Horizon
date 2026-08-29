@@ -32,6 +32,12 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           >
             Véhicules
           </Link>
+          <Link
+            href="/admin/utilisateurs"
+            className="rounded-lg px-3 py-2 hover:bg-black/5 hover:text-accent"
+          >
+            Utilisateurs
+          </Link>
         </nav>
       </aside>
 
