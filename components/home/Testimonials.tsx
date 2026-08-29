@@ -1,8 +1,8 @@
 import { Container } from "@/components/ui/Container";
 import { getVehicleReviews, getAverageRating } from "@/lib/reviews";
 
-export function Testimonials() {
-  const reviews = getVehicleReviews();
+export async function Testimonials() {
+  const reviews = await getVehicleReviews();
   const average = getAverageRating(reviews);
 
   return (
@@ -17,7 +17,7 @@ export function Testimonials() {
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
           {reviews.map((review) => (
-            <div key={review.author} className="rounded-xl border border-black/10 p-5">
+            <div key={review.id} className="rounded-xl border border-black/10 p-5">
               <div className="flex items-center justify-between">
                 <span className="font-medium">{review.author}</span>
                 <span className="text-accent" aria-label={`${review.rating} sur 5`}>

@@ -1,8 +1,8 @@
 import { getVehicleReviews, getAverageRating } from "@/lib/reviews";
 import { formatDate } from "@/lib/utils";
 
-export function Reviews() {
-  const reviews = getVehicleReviews();
+export async function Reviews() {
+  const reviews = await getVehicleReviews();
   const average = getAverageRating(reviews);
 
   return (
@@ -16,7 +16,7 @@ export function Reviews() {
 
       <div className="space-y-4">
         {reviews.map((review) => (
-          <div key={review.author} className="rounded-xl border border-black/10 p-4">
+          <div key={review.id} className="rounded-xl border border-black/10 p-4">
             <div className="flex items-center justify-between">
               <span className="font-medium">{review.author}</span>
               <span className="text-accent" aria-label={`${review.rating} sur 5`}>
@@ -25,7 +25,7 @@ export function Reviews() {
               </span>
             </div>
             <p className="mt-2 text-sm text-black/70">{review.comment}</p>
-            <p className="mt-2 text-xs text-black/60">{formatDate(review.date)}</p>
+            <p className="mt-2 text-xs text-black/60">{formatDate(review.review_date)}</p>
           </div>
         ))}
       </div>

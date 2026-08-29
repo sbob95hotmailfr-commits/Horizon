@@ -108,6 +108,26 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["profiles"]["Insert"]>;
         Relationships: [];
       };
+      reviews: {
+        Row: {
+          id: string;
+          author: string;
+          rating: number;
+          comment: string;
+          review_date: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          author: string;
+          rating: number;
+          comment: string;
+          review_date?: string;
+          created_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["reviews"]["Insert"]>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -133,3 +153,4 @@ export interface Database {
 export type Vehicle = Database["public"]["Tables"]["vehicles"]["Row"];
 export type Booking = Database["public"]["Tables"]["bookings"]["Row"];
 export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+export type Review = Database["public"]["Tables"]["reviews"]["Row"];

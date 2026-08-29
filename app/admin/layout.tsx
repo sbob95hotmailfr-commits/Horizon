@@ -21,6 +21,12 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         </Link>
         <nav className="flex flex-col gap-1 text-sm font-medium">
           <Link
+            href="/admin/statistiques"
+            className="rounded-lg px-3 py-2 hover:bg-black/5 hover:text-accent"
+          >
+            Statistiques
+          </Link>
+          <Link
             href="/admin/reservations"
             className="rounded-lg px-3 py-2 hover:bg-black/5 hover:text-accent"
           >
@@ -37,6 +43,12 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             className="rounded-lg px-3 py-2 hover:bg-black/5 hover:text-accent"
           >
             Utilisateurs
+          </Link>
+          <Link
+            href="/admin/avis"
+            className="rounded-lg px-3 py-2 hover:bg-black/5 hover:text-accent"
+          >
+            Avis
           </Link>
         </nav>
       </aside>
