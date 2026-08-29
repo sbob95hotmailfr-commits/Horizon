@@ -81,6 +81,18 @@ export async function getVehicleBookedRanges(vehicleId: string): Promise<BookedR
   return (data ?? []).map((r) => ({ startDate: r.start_date, endDate: r.end_date }));
 }
 
+/** Réservé à l'admin : renvoie tous les véhicules, y compris désactivés. */
+export async function getAllVehiclesAdmin(): Promise<Vehicle[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("vehicles")
+    .select("*")
+    .order("brand", { ascending: true });
+
+  if (error) throw error;
+  return data ?? [];
+}
+
 export async function getPopularVehicles(limit = 4): Promise<Vehicle[]> {
   const supabase = await createClient();
   const { data, error } = await supabase
