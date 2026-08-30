@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { deleteVehicle, toggleVehicleAvailability } from "@/app/admin/vehicules/actions";
 import { formatPrice, cn } from "@/lib/utils";
@@ -8,6 +9,7 @@ import { VEHICLE_CATEGORIES } from "@/lib/constants";
 import type { Vehicle } from "@/types/database.types";
 
 export function VehicleAdminRow({ vehicle }: { vehicle: Vehicle }) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [available, setAvailable] = useState(vehicle.available);
   const [deleted, setDeleted] = useState(false);
@@ -19,7 +21,10 @@ export function VehicleAdminRow({ vehicle }: { vehicle: Vehicle }) {
   function handleToggle() {
     startTransition(async () => {
       const result = await toggleVehicleAvailability(vehicle.id, !available);
-      if (result.success) setAvailable((v) => !v);
+      if (result.success) {
+        setAvailable((v) => !v);
+        router.refresh();
+      }
     });
   }
 
@@ -55,7 +60,7 @@ export function VehicleAdminRow({ vehicle }: { vehicle: Vehicle }) {
             available ? "bg-black text-ivory" : "border border-black/20 text-black/60",
           )}
         >
-          {available ? "Disponible" : "Désactivé"}
+          {available ? "Disponible" : "Indisponible"}
         </button>
         <Link
           href={`/admin/vehicules/${vehicle.id}`}
