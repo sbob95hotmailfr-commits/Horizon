@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { confirmBooking, refuseBooking } from "@/app/admin/reservations/actions";
 import { formatDate, formatPrice, cn } from "@/lib/utils";
 import type { BookingWithVehicle } from "@/lib/bookings";
@@ -55,6 +56,12 @@ export function AdminBookingRow({ booking }: { booking: BookingWithVehicle }) {
         <span className={cn("rounded-full px-3 py-1 text-xs font-medium", STATUS_CLASSES[status])}>
           {STATUS_LABELS[status]}
         </span>
+        <Link
+          href={`/admin/reservations/${booking.id}`}
+          className="rounded-full border border-black/15 px-3 py-1.5 text-sm font-medium text-black/70 hover:border-accent hover:text-accent"
+        >
+          Modifier
+        </Link>
         {status === "en_attente" && (
           <div className="flex items-center gap-2">
             <button

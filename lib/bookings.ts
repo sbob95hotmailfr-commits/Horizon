@@ -28,6 +28,19 @@ export async function getAllBookings(): Promise<BookingWithVehicle[]> {
   return getUserBookings();
 }
 
+/** Réservé à l'admin : la RLS "bookings_select_admin" autorise la lecture de n'importe quelle réservation. */
+export async function getBookingById(id: string): Promise<BookingWithVehicle | null> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("*, vehicle:vehicles(id, name, brand, price_per_day, category)")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (error) throw error;
+  return data as unknown as BookingWithVehicle | null;
+}
+
 /** Réservé à l'admin : nombre de demandes en attente, pour le badge de la nav. */
 export async function getPendingBookingsCount(): Promise<number> {
   const supabase = await createClient();
