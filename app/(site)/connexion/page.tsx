@@ -31,6 +31,26 @@ function ConnexionForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
+  const [forgotPassword, setForgotPassword] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
+
+  async function handleResetPassword(event: React.FormEvent) {
+    event.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    const supabase = createClient();
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reinitialiser-mot-de-passe`,
+    });
+    setLoading(false);
+
+    if (error) {
+      setError("Une erreur est survenue. Réessayez.");
+      return;
+    }
+    setResetSent(true);
+  }
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -65,6 +85,58 @@ function ConnexionForm() {
       }
       setInfo("Compte créé. Vérifiez votre boîte mail pour confirmer votre adresse.");
     }
+  }
+
+  if (forgotPassword) {
+    return (
+      <Container className="max-w-md py-20">
+        <div className="space-y-8">
+          <div>
+            <h1 className="text-lg font-semibold">Mot de passe oublié</h1>
+            <p className="mt-1 text-sm text-black/65">
+              Indiquez votre email, vous recevrez un lien pour choisir un nouveau mot de passe.
+            </p>
+          </div>
+
+          {resetSent ? (
+            <p className="text-sm text-black/70">
+              Email envoyé si un compte existe avec cette adresse. Vérifiez votre boîte mail.
+            </p>
+          ) : (
+            <form onSubmit={handleResetPassword} className="space-y-4">
+              <label className="block space-y-1 text-sm">
+                <span className="font-medium">Email</span>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full rounded-lg border border-black/15 px-3 py-2"
+                />
+              </label>
+
+              {error && <p className="text-sm font-medium text-black">{error}</p>}
+
+              <Button type="submit" disabled={loading} className="w-full">
+                {loading ? "…" : "Envoyer le lien de réinitialisation"}
+              </Button>
+            </form>
+          )}
+
+          <button
+            type="button"
+            onClick={() => {
+              setForgotPassword(false);
+              setResetSent(false);
+              setError(null);
+            }}
+            className="text-sm font-medium text-accent hover:underline"
+          >
+            ← Retour à la connexion
+          </button>
+        </div>
+      </Container>
+    );
   }
 
   return (
@@ -112,6 +184,19 @@ function ConnexionForm() {
               </button>
             </div>
           </label>
+
+          {mode === "connexion" && (
+            <button
+              type="button"
+              onClick={() => {
+                setForgotPassword(true);
+                setError(null);
+              }}
+              className="text-sm font-medium text-accent hover:underline"
+            >
+              Mot de passe oublié ?
+            </button>
+          )}
 
           {error && <p className="text-sm font-medium text-black">{error}</p>}
           {info && <p className="text-sm text-black/70">{info}</p>}
