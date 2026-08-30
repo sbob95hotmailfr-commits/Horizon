@@ -1,4 +1,4 @@
-import type { VehicleCategory, Transmission, FuelType } from "@/types/database.types";
+import type { Transmission, FuelType } from "@/types/database.types";
 
 export const CITY = "Paris";
 export const REGION = "Île-de-France";
@@ -12,19 +12,8 @@ export const PICKUP_LOCATIONS = [
   "Boulogne-Billancourt",
 ] as const;
 
-export const VEHICLE_CATEGORIES: { value: VehicleCategory; label: string }[] = [
-  { value: "citadine", label: "Citadine" },
-  { value: "berline", label: "Berline" },
-  { value: "suv", label: "SUV" },
-  { value: "utilitaire", label: "Utilitaire" },
-  { value: "cabriolet", label: "Cabriolet" },
-  { value: "electrique", label: "Électrique" },
-];
-
-// Regroupement utilisé pour séparer le catalogue "Véhicules" (voitures)
-// de la page "Utilitaires" dans la navigation.
-export const CAR_CATEGORIES = VEHICLE_CATEGORIES.filter((c) => c.value !== "utilitaire");
-export const UTILITY_CATEGORIES = VEHICLE_CATEGORIES.filter((c) => c.value === "utilitaire");
+// Les catégories de véhicules sont gérables depuis l'admin et vivent
+// en base (table `categories`) — voir lib/categories.ts.
 
 export const TRANSMISSIONS: { value: Transmission; label: string }[] = [
   { value: "manuelle", label: "Manuelle" },

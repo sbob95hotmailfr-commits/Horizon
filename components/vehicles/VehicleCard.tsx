@@ -3,17 +3,18 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { Monogram } from "@/components/brand/Monogram";
 import { formatPrice } from "@/lib/utils";
-import { VEHICLE_CATEGORIES, FUEL_TYPES } from "@/lib/constants";
+import { FUEL_TYPES } from "@/lib/constants";
 import type { Vehicle } from "@/types/database.types";
 
 export function VehicleCard({
   vehicle,
   imageUrl,
+  categoryLabel,
 }: {
   vehicle: Vehicle;
   imageUrl?: string;
+  categoryLabel?: string;
 }) {
-  const categoryLabel = VEHICLE_CATEGORIES.find((c) => c.value === vehicle.category)?.label;
   const fuelLabel = FUEL_TYPES.find((f) => f.value === vehicle.fuel_type)?.label;
 
   return (

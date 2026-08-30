@@ -4,7 +4,7 @@ import { VehicleCard } from "@/components/vehicles/VehicleCard";
 import { VehicleFilters } from "@/components/vehicles/VehicleFilters";
 import { getVehicles } from "@/lib/vehicles";
 import { resolveVehicleImages } from "@/lib/vehicle-images";
-import { UTILITY_CATEGORIES } from "@/lib/constants";
+import { getUtilityCategories } from "@/lib/categories";
 
 interface PageProps {
   searchParams: Promise<{
@@ -21,9 +21,10 @@ interface PageProps {
 
 export default async function UtilitairesPage({ searchParams }: PageProps) {
   const params = await searchParams;
+  const utilityCategories = await getUtilityCategories();
 
   const vehicles = await getVehicles({
-    categories: UTILITY_CATEGORIES.map((c) => c.value),
+    categories: utilityCategories.map((c) => c.value),
     maxPrice: params.prixMax ? Number(params.prixMax) : undefined,
     startDate: params.debut,
     endDate: params.fin,
@@ -33,6 +34,7 @@ export default async function UtilitairesPage({ searchParams }: PageProps) {
     vehicles.map(async (vehicle) => ({
       vehicle,
       imageUrl: (await resolveVehicleImages(vehicle))[0],
+      categoryLabel: utilityCategories.find((c) => c.value === vehicle.category)?.label,
     })),
   );
 
@@ -53,7 +55,7 @@ export default async function UtilitairesPage({ searchParams }: PageProps) {
         </div>
 
         <Suspense>
-          <VehicleFilters categories={UTILITY_CATEGORIES} basePath="/utilitaires" />
+          <VehicleFilters categories={utilityCategories} basePath="/utilitaires" />
         </Suspense>
 
         {withImages.length === 0 ? (
@@ -61,8 +63,13 @@ export default async function UtilitairesPage({ searchParams }: PageProps) {
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <h2 className="sr-only">Résultats</h2>
-            {withImages.map(({ vehicle, imageUrl }) => (
-              <VehicleCard key={vehicle.id} vehicle={vehicle} imageUrl={imageUrl} />
+            {withImages.map(({ vehicle, imageUrl, categoryLabel }) => (
+              <VehicleCard
+                key={vehicle.id}
+                vehicle={vehicle}
+                imageUrl={imageUrl}
+                categoryLabel={categoryLabel}
+              />
             ))}
           </div>
         )}

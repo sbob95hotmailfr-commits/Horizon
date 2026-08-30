@@ -1,12 +1,12 @@
 import "server-only";
 import { getAllBookings } from "@/lib/bookings";
 import { getAllVehiclesAdmin } from "@/lib/vehicles";
-import { VEHICLE_CATEGORIES } from "@/lib/constants";
-import type { BookingStatus, VehicleCategory } from "@/types/database.types";
+import { getCategories } from "@/lib/categories";
+import type { BookingStatus } from "@/types/database.types";
 
 export interface AdminStats {
   bookingsByStatus: Record<BookingStatus, number>;
-  bookingsByCategory: { category: VehicleCategory; label: string; count: number }[];
+  bookingsByCategory: { category: string; label: string; count: number }[];
   confirmedRevenue: number;
   vehiclesTotal: number;
   vehiclesAvailable: number;
@@ -18,7 +18,11 @@ function nightsBetween(start: string, end: string): number {
 }
 
 export async function getAdminStats(): Promise<AdminStats> {
-  const [bookings, vehicles] = await Promise.all([getAllBookings(), getAllVehiclesAdmin()]);
+  const [bookings, vehicles, categories] = await Promise.all([
+    getAllBookings(),
+    getAllVehiclesAdmin(),
+    getCategories(),
+  ]);
 
   const bookingsByStatus: Record<BookingStatus, number> = {
     en_attente: 0,
@@ -26,7 +30,7 @@ export async function getAdminStats(): Promise<AdminStats> {
     refusee: 0,
     annulee: 0,
   };
-  const categoryCounts = new Map<VehicleCategory, number>();
+  const categoryCounts = new Map<string, number>();
   let confirmedRevenue = 0;
 
   for (const booking of bookings) {
@@ -45,7 +49,7 @@ export async function getAdminStats(): Promise<AdminStats> {
     }
   }
 
-  const bookingsByCategory = VEHICLE_CATEGORIES.map((c) => ({
+  const bookingsByCategory = categories.map((c) => ({
     category: c.value,
     label: c.label,
     count: categoryCounts.get(c.value) ?? 0,

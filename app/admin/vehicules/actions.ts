@@ -4,11 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { getCurrentUserWithRole } from "@/lib/auth";
-import type {
-  VehicleCategory,
-  Transmission,
-  FuelType,
-} from "@/types/database.types";
+import type { Transmission, FuelType } from "@/types/database.types";
 
 export interface VehicleFormState {
   error?: string;
@@ -25,7 +21,7 @@ function readVehicleFields(formData: FormData) {
   return {
     name: String(formData.get("name") ?? "").trim(),
     brand: String(formData.get("brand") ?? "").trim(),
-    category: formData.get("category") as VehicleCategory,
+    category: String(formData.get("category") ?? ""),
     price_per_day: Number(formData.get("price_per_day")),
     transmission: formData.get("transmission") as Transmission,
     fuel_type: formData.get("fuel_type") as FuelType,

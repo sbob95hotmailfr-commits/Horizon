@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import type { VehicleCategory } from "@/types/database.types";
 import { cn } from "@/lib/utils";
 
 const PRICE_CAPS = [50, 80, 120] as const;
@@ -10,7 +9,7 @@ export function VehicleFilters({
   categories,
   basePath,
 }: {
-  categories: { value: VehicleCategory; label: string }[];
+  categories: { value: string; label: string }[];
   basePath: string;
 }) {
   const router = useRouter();

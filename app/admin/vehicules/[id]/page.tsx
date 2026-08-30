@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { VehicleForm } from "@/components/admin/VehicleForm";
 import { updateVehicle } from "@/app/admin/vehicules/actions";
 import { getVehicleById } from "@/lib/vehicles";
+import { getCategories } from "@/lib/categories";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -9,7 +10,7 @@ interface PageProps {
 
 export default async function AdminEditVehiculePage({ params }: PageProps) {
   const { id } = await params;
-  const vehicle = await getVehicleById(id);
+  const [vehicle, categories] = await Promise.all([getVehicleById(id), getCategories()]);
 
   if (!vehicle) {
     notFound();
@@ -23,6 +24,7 @@ export default async function AdminEditVehiculePage({ params }: PageProps) {
       <VehicleForm
         action={updateVehicle.bind(null, vehicle.id)}
         vehicle={vehicle}
+        categories={categories}
         submitLabel="Enregistrer les modifications"
       />
     </div>

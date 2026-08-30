@@ -2,20 +2,25 @@
 
 import { useMemo, useState } from "react";
 import { VehicleAdminRow } from "@/components/admin/VehicleAdminRow";
-import { VEHICLE_CATEGORIES } from "@/lib/constants";
-import type { Vehicle } from "@/types/database.types";
+import type { Vehicle, Category } from "@/types/database.types";
 
-export function AdminVehiclesList({ vehicles }: { vehicles: Vehicle[] }) {
+export function AdminVehiclesList({
+  vehicles,
+  categories,
+}: {
+  vehicles: Vehicle[];
+  categories: Category[];
+}) {
   const [search, setSearch] = useState("");
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
     if (!query) return vehicles;
     return vehicles.filter((v) => {
-      const categoryLabel = VEHICLE_CATEGORIES.find((c) => c.value === v.category)?.label ?? "";
+      const categoryLabel = categories.find((c) => c.value === v.category)?.label ?? "";
       return `${v.brand} ${v.name} ${categoryLabel}`.toLowerCase().includes(query);
     });
-  }, [vehicles, search]);
+  }, [vehicles, categories, search]);
 
   const available = filtered.filter((v) => v.available);
   const unavailable = filtered.filter((v) => !v.available);
@@ -43,7 +48,7 @@ export function AdminVehiclesList({ vehicles }: { vehicles: Vehicle[] }) {
             ) : (
               <div className="space-y-3">
                 {available.map((vehicle) => (
-                  <VehicleAdminRow key={vehicle.id} vehicle={vehicle} />
+                  <VehicleAdminRow key={vehicle.id} vehicle={vehicle} categories={categories} />
                 ))}
               </div>
             )}
@@ -58,7 +63,7 @@ export function AdminVehiclesList({ vehicles }: { vehicles: Vehicle[] }) {
             ) : (
               <div className="space-y-3">
                 {unavailable.map((vehicle) => (
-                  <VehicleAdminRow key={vehicle.id} vehicle={vehicle} />
+                  <VehicleAdminRow key={vehicle.id} vehicle={vehicle} categories={categories} />
                 ))}
               </div>
             )}

@@ -9,7 +9,7 @@ import { Reviews } from "@/components/vehicles/Reviews";
 import { AvailabilityCalendarLazy } from "@/components/vehicles/AvailabilityCalendarLazy";
 import { getVehicleById, getVehicleBookedRanges } from "@/lib/vehicles";
 import { resolveVehicleImages } from "@/lib/vehicle-images";
-import { VEHICLE_CATEGORIES } from "@/lib/constants";
+import { getCategories } from "@/lib/categories";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -23,12 +23,13 @@ export default async function VehiculeDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const [images, bookedRanges] = await Promise.all([
+  const [images, bookedRanges, categories] = await Promise.all([
     resolveVehicleImages(vehicle),
     getVehicleBookedRanges(vehicle.id),
+    getCategories(),
   ]);
 
-  const categoryLabel = VEHICLE_CATEGORIES.find((c) => c.value === vehicle.category)?.label;
+  const categoryLabel = categories.find((c) => c.value === vehicle.category)?.label;
 
   return (
     <div className="py-12">

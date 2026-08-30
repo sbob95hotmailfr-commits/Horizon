@@ -5,13 +5,14 @@ import { HowItWorks } from "@/components/home/HowItWorks";
 import { Testimonials } from "@/components/home/Testimonials";
 import { Faq } from "@/components/home/Faq";
 import { getHeroPhoto } from "@/lib/unsplash";
+import { getCarCategories } from "@/lib/categories";
 
 export default async function Home() {
-  const heroImage = await getHeroPhoto();
+  const [heroImage, carCategories] = await Promise.all([getHeroPhoto(), getCarCategories()]);
 
   return (
     <>
-      <Hero imageUrl={heroImage} />
+      <Hero imageUrl={heroImage} carCategories={carCategories} />
       <TrustBand />
       <PopularVehicles />
       <HowItWorks />

@@ -1,7 +1,9 @@
 import "server-only";
-import type { VehicleCategory } from "@/types/database.types";
 
-const CATEGORY_KEYWORDS: Record<VehicleCategory, string> = {
+// Catégories connues au moment de la sélection des photos. Une
+// catégorie créée depuis l'admin après coup n'aura pas de mots-clés
+// dédiés : on retombe alors sur DEFAULT_KEYWORDS plutôt que d'échouer.
+const CATEGORY_KEYWORDS: Record<string, string> = {
   citadine: "modern compact city car",
   berline: "modern sedan car",
   suv: "suv car white background",
@@ -9,6 +11,7 @@ const CATEGORY_KEYWORDS: Record<VehicleCategory, string> = {
   cabriolet: "convertible sports car",
   electrique: "electric car charging",
 };
+const DEFAULT_KEYWORDS = "modern car vehicle";
 
 // Photo curée manuellement (recherche dynamique trop aléatoire pour
 // garantir la composition voulue) : route de montagne ouverte sur
@@ -55,8 +58,8 @@ async function searchPhotos(query: string, count: number): Promise<string[]> {
   return urls;
 }
 
-export function getVehiclePhotos(category: VehicleCategory, count = 6): Promise<string[]> {
-  return searchPhotos(CATEGORY_KEYWORDS[category], count);
+export function getVehiclePhotos(category: string, count = 6): Promise<string[]> {
+  return searchPhotos(CATEGORY_KEYWORDS[category] ?? DEFAULT_KEYWORDS, count);
 }
 
 export async function getHeroPhoto(): Promise<string> {

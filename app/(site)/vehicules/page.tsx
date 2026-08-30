@@ -4,8 +4,7 @@ import { VehicleCard } from "@/components/vehicles/VehicleCard";
 import { VehicleFilters } from "@/components/vehicles/VehicleFilters";
 import { getVehicles } from "@/lib/vehicles";
 import { resolveVehicleImages } from "@/lib/vehicle-images";
-import { CAR_CATEGORIES } from "@/lib/constants";
-import type { VehicleCategory } from "@/types/database.types";
+import { getCarCategories } from "@/lib/categories";
 
 interface PageProps {
   searchParams: Promise<{
@@ -22,10 +21,11 @@ interface PageProps {
 
 export default async function VehiculesPage({ searchParams }: PageProps) {
   const params = await searchParams;
+  const carCategories = await getCarCategories();
 
   const vehicles = await getVehicles({
-    categories: CAR_CATEGORIES.map((c) => c.value),
-    category: params.categorie as VehicleCategory | undefined,
+    categories: carCategories.map((c) => c.value),
+    category: params.categorie,
     maxPrice: params.prixMax ? Number(params.prixMax) : undefined,
     startDate: params.debut,
     endDate: params.fin,
@@ -35,6 +35,7 @@ export default async function VehiculesPage({ searchParams }: PageProps) {
     vehicles.map(async (vehicle) => ({
       vehicle,
       imageUrl: (await resolveVehicleImages(vehicle))[0],
+      categoryLabel: carCategories.find((c) => c.value === vehicle.category)?.label,
     })),
   );
 
@@ -55,7 +56,7 @@ export default async function VehiculesPage({ searchParams }: PageProps) {
         </div>
 
         <Suspense>
-          <VehicleFilters categories={CAR_CATEGORIES} basePath="/vehicules" />
+          <VehicleFilters categories={carCategories} basePath="/vehicules" />
         </Suspense>
 
         {withImages.length === 0 ? (
@@ -63,8 +64,13 @@ export default async function VehiculesPage({ searchParams }: PageProps) {
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <h2 className="sr-only">Résultats</h2>
-            {withImages.map(({ vehicle, imageUrl }) => (
-              <VehicleCard key={vehicle.id} vehicle={vehicle} imageUrl={imageUrl} />
+            {withImages.map(({ vehicle, imageUrl, categoryLabel }) => (
+              <VehicleCard
+                key={vehicle.id}
+                vehicle={vehicle}
+                imageUrl={imageUrl}
+                categoryLabel={categoryLabel}
+              />
             ))}
           </div>
         )}

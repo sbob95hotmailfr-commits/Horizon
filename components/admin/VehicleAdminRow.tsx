@@ -5,16 +5,21 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { deleteVehicle, toggleVehicleAvailability } from "@/app/admin/vehicules/actions";
 import { formatPrice, cn } from "@/lib/utils";
-import { VEHICLE_CATEGORIES } from "@/lib/constants";
-import type { Vehicle } from "@/types/database.types";
+import type { Vehicle, Category } from "@/types/database.types";
 
-export function VehicleAdminRow({ vehicle }: { vehicle: Vehicle }) {
+export function VehicleAdminRow({
+  vehicle,
+  categories,
+}: {
+  vehicle: Vehicle;
+  categories: Category[];
+}) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [available, setAvailable] = useState(vehicle.available);
   const [deleted, setDeleted] = useState(false);
 
-  const categoryLabel = VEHICLE_CATEGORIES.find((c) => c.value === vehicle.category)?.label;
+  const categoryLabel = categories.find((c) => c.value === vehicle.category)?.label;
 
   if (deleted) return null;
 

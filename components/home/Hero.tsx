@@ -1,7 +1,14 @@
 import Image from "next/image";
 import { SearchBar } from "@/components/home/SearchBar";
+import type { Category } from "@/types/database.types";
 
-export function Hero({ imageUrl }: { imageUrl?: string }) {
+export function Hero({
+  imageUrl,
+  carCategories,
+}: {
+  imageUrl?: string;
+  carCategories: Category[];
+}) {
   return (
     <section className="relative flex min-h-[92vh] w-full items-end overflow-hidden bg-black">
       {imageUrl && (
@@ -25,7 +32,7 @@ export function Hero({ imageUrl }: { imageUrl?: string }) {
           <p className="text-ivory/70">La liberté commence à l&apos;horizon.</p>
         </div>
 
-        <SearchBar />
+        <SearchBar categories={carCategories} />
       </div>
     </section>
   );

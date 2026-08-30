@@ -2,8 +2,8 @@
 
 import { useActionState } from "react";
 import { Button } from "@/components/ui/Button";
-import { VEHICLE_CATEGORIES, TRANSMISSIONS, FUEL_TYPES, PICKUP_LOCATIONS } from "@/lib/constants";
-import type { Vehicle } from "@/types/database.types";
+import { TRANSMISSIONS, FUEL_TYPES, PICKUP_LOCATIONS } from "@/lib/constants";
+import type { Vehicle, Category } from "@/types/database.types";
 import type { VehicleFormState } from "@/app/admin/vehicules/actions";
 
 type Action = (state: VehicleFormState, formData: FormData) => Promise<VehicleFormState>;
@@ -11,10 +11,12 @@ type Action = (state: VehicleFormState, formData: FormData) => Promise<VehicleFo
 export function VehicleForm({
   action,
   vehicle,
+  categories,
   submitLabel,
 }: {
   action: Action;
   vehicle?: Vehicle;
+  categories: Category[];
   submitLabel: string;
 }) {
   const [state, formAction, pending] = useActionState<VehicleFormState, FormData>(action, {});
@@ -46,7 +48,7 @@ export function VehicleForm({
             defaultValue={vehicle?.category}
             className="w-full rounded-lg border border-black/15 px-3 py-2"
           >
-            {VEHICLE_CATEGORIES.map((c) => (
+            {categories.map((c) => (
               <option key={c.value} value={c.value}>
                 {c.label}
               </option>

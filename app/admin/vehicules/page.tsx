@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { getAllVehiclesAdmin } from "@/lib/vehicles";
+import { getCategories } from "@/lib/categories";
 import { AdminVehiclesList } from "@/components/admin/AdminVehiclesList";
 
 export default async function AdminVehiculesPage() {
-  const vehicles = await getAllVehiclesAdmin();
+  const [vehicles, categories] = await Promise.all([getAllVehiclesAdmin(), getCategories()]);
   const availableCount = vehicles.filter((v) => v.available).length;
 
   return (
@@ -28,7 +29,7 @@ export default async function AdminVehiculesPage() {
       {vehicles.length === 0 ? (
         <p className="text-black/65">Aucun véhicule pour le moment.</p>
       ) : (
-        <AdminVehiclesList vehicles={vehicles} />
+        <AdminVehiclesList vehicles={vehicles} categories={categories} />
       )}
     </div>
   );

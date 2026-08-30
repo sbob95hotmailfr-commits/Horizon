@@ -1,11 +1,3 @@
-export type VehicleCategory =
-  | "citadine"
-  | "berline"
-  | "suv"
-  | "utilitaire"
-  | "cabriolet"
-  | "electrique";
-
 export type Transmission = "manuelle" | "automatique";
 export type FuelType = "essence" | "diesel" | "electrique" | "hybride";
 export type BookingStatus = "en_attente" | "confirmee" | "refusee" | "annulee";
@@ -19,7 +11,7 @@ export interface Database {
           id: string;
           name: string;
           brand: string;
-          category: VehicleCategory;
+          category: string;
           price_per_day: number;
           images: string[];
           transmission: Transmission;
@@ -35,7 +27,7 @@ export interface Database {
           id?: string;
           name: string;
           brand: string;
-          category: VehicleCategory;
+          category: string;
           price_per_day: number;
           images?: string[];
           transmission: Transmission;
@@ -128,6 +120,22 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["reviews"]["Insert"]>;
         Relationships: [];
       };
+      categories: {
+        Row: {
+          value: string;
+          label: string;
+          is_utility: boolean;
+          sort_order: number;
+        };
+        Insert: {
+          value: string;
+          label: string;
+          is_utility?: boolean;
+          sort_order?: number;
+        };
+        Update: Partial<Database["public"]["Tables"]["categories"]["Insert"]>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -141,7 +149,6 @@ export interface Database {
       };
     };
     Enums: {
-      vehicle_category: VehicleCategory;
       transmission_type: Transmission;
       fuel_type: FuelType;
       booking_status: BookingStatus;
@@ -154,3 +161,4 @@ export type Vehicle = Database["public"]["Tables"]["vehicles"]["Row"];
 export type Booking = Database["public"]["Tables"]["bookings"]["Row"];
 export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 export type Review = Database["public"]["Tables"]["reviews"]["Row"];
+export type Category = Database["public"]["Tables"]["categories"]["Row"];

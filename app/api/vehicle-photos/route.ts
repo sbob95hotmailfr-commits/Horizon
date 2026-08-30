@@ -1,21 +1,11 @@
 import { NextResponse } from "next/server";
 import { getVehiclePhotos } from "@/lib/unsplash";
-import type { VehicleCategory } from "@/types/database.types";
-
-const VALID_CATEGORIES: VehicleCategory[] = [
-  "citadine",
-  "berline",
-  "suv",
-  "utilitaire",
-  "cabriolet",
-  "electrique",
-];
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const category = searchParams.get("category") as VehicleCategory | null;
+  const category = searchParams.get("category");
 
-  if (!category || !VALID_CATEGORIES.includes(category)) {
+  if (!category) {
     return NextResponse.json(
       { error: "Paramètre 'category' invalide ou manquant." },
       { status: 400 },

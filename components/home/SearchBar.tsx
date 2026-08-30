@@ -2,10 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { PICKUP_LOCATIONS, CAR_CATEGORIES, TIME_SLOTS, DEFAULT_TIME } from "@/lib/constants";
+import { PICKUP_LOCATIONS, TIME_SLOTS, DEFAULT_TIME } from "@/lib/constants";
 import { Button } from "@/components/ui/Button";
+import type { Category } from "@/types/database.types";
 
-export function SearchBar() {
+export function SearchBar({ categories }: { categories: Category[] }) {
   const router = useRouter();
   const [location, setLocation] = useState<string>(PICKUP_LOCATIONS[0]);
   const [category, setCategory] = useState("");
@@ -56,7 +57,7 @@ export function SearchBar() {
             className="w-full bg-transparent text-sm font-medium outline-none"
           >
             <option value="">Toutes</option>
-            {CAR_CATEGORIES.map((c) => (
+            {categories.map((c) => (
               <option key={c.value} value={c.value}>
                 {c.label}
               </option>
