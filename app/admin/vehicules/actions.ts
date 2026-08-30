@@ -80,14 +80,20 @@ export async function updateVehicle(
 export async function deleteVehicle(vehicleId: string) {
   const session = await getCurrentUserWithRole();
   if (!session?.isAdmin) {
-    return { success: false };
+    return { success: false, error: "Accès refusé." };
   }
 
   const supabase = await createClient();
   const { error } = await supabase.from("vehicles").delete().eq("id", vehicleId);
 
   if (error) {
-    return { success: false };
+    const hasBookings = error.code === "23503";
+    return {
+      success: false,
+      error: hasBookings
+        ? "Ce véhicule a des réservations associées : impossible de le supprimer. Désactivez-le plutôt (bouton disponibilité)."
+        : "Impossible de supprimer ce véhicule.",
+    };
   }
 
   revalidatePath("/admin/vehicules");

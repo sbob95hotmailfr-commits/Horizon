@@ -18,6 +18,7 @@ export function VehicleAdminRow({
   const [isPending, startTransition] = useTransition();
   const [available, setAvailable] = useState(vehicle.available);
   const [deleted, setDeleted] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const categoryLabel = categories.find((c) => c.value === vehicle.category)?.label;
 
@@ -37,51 +38,59 @@ export function VehicleAdminRow({
     if (!confirm(`Supprimer ${vehicle.brand} ${vehicle.name} ? Cette action est définitive.`)) {
       return;
     }
+    setDeleteError(null);
     startTransition(async () => {
       const result = await deleteVehicle(vehicle.id);
-      if (result.success) setDeleted(true);
+      if (result.success) {
+        setDeleted(true);
+      } else {
+        setDeleteError(result.error ?? "Suppression impossible.");
+      }
     });
   }
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-black/10 p-4 sm:flex-row sm:items-center sm:justify-between">
-      <div>
-        <p className="font-medium">
-          {vehicle.brand} {vehicle.name}
-          <span className="ml-2 text-sm text-black/65">
-            {categoryLabel} · {formatPrice(vehicle.price_per_day)}/jour
-          </span>
-        </p>
-        <p className="text-sm text-black/65">{vehicle.location}</p>
-      </div>
+    <div className="rounded-xl border border-black/10 p-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="font-medium">
+            {vehicle.brand} {vehicle.name}
+            <span className="ml-2 text-sm text-black/65">
+              {categoryLabel} · {formatPrice(vehicle.price_per_day)}/jour
+            </span>
+          </p>
+          <p className="text-sm text-black/65">{vehicle.location}</p>
+        </div>
 
-      <div className="flex items-center gap-3">
-        <button
-          type="button"
-          disabled={isPending}
-          onClick={handleToggle}
-          className={cn(
-            "rounded-full px-3 py-1 text-xs font-medium disabled:opacity-50",
-            available ? "bg-black text-ivory" : "border border-black/20 text-black/60",
-          )}
-        >
-          {available ? "Disponible" : "Indisponible"}
-        </button>
-        <Link
-          href={`/admin/vehicules/${vehicle.id}`}
-          className="rounded-full border border-black/15 px-3 py-1.5 text-sm font-medium text-black/70 hover:border-accent hover:text-accent"
-        >
-          Modifier
-        </Link>
-        <button
-          type="button"
-          disabled={isPending}
-          onClick={handleDelete}
-          className="rounded-full border border-black/15 px-3 py-1.5 text-sm font-medium text-black/70 hover:border-accent hover:text-accent disabled:opacity-50"
-        >
-          Supprimer
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            disabled={isPending}
+            onClick={handleToggle}
+            className={cn(
+              "rounded-full px-3 py-1 text-xs font-medium disabled:opacity-50",
+              available ? "bg-black text-ivory" : "border border-black/20 text-black/60",
+            )}
+          >
+            {available ? "Disponible" : "Indisponible"}
+          </button>
+          <Link
+            href={`/admin/vehicules/${vehicle.id}`}
+            className="rounded-full border border-black/15 px-3 py-1.5 text-sm font-medium text-black/70 hover:border-accent hover:text-accent"
+          >
+            Modifier
+          </Link>
+          <button
+            type="button"
+            disabled={isPending}
+            onClick={handleDelete}
+            className="rounded-full border border-black/15 px-3 py-1.5 text-sm font-medium text-black/70 hover:border-accent hover:text-accent disabled:opacity-50"
+          >
+            Supprimer
+          </button>
+        </div>
       </div>
+      {deleteError && <p className="mt-2 text-sm font-medium text-black">{deleteError}</p>}
     </div>
   );
 }
