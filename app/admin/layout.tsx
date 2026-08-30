@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getCurrentUserWithRole } from "@/lib/auth";
+import { getPendingBookingsCount } from "@/lib/bookings";
 import { Logo } from "@/components/brand/Logo";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -12,6 +13,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   if (!session.isAdmin) {
     redirect("/");
   }
+
+  const pendingCount = await getPendingBookingsCount();
 
   return (
     <div className="flex min-h-screen w-full bg-ivory text-black">
@@ -28,9 +31,14 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </Link>
           <Link
             href="/admin/reservations"
-            className="rounded-lg px-3 py-2 hover:bg-black/5 hover:text-accent"
+            className="flex items-center justify-between rounded-lg px-3 py-2 hover:bg-black/5 hover:text-accent"
           >
             Réservations
+            {pendingCount > 0 && (
+              <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-semibold text-black">
+                {pendingCount}
+              </span>
+            )}
           </Link>
           <Link
             href="/admin/vehicules"

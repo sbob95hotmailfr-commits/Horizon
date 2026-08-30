@@ -27,3 +27,15 @@ export async function getUserBookings(): Promise<BookingWithVehicle[]> {
 export async function getAllBookings(): Promise<BookingWithVehicle[]> {
   return getUserBookings();
 }
+
+/** Réservé à l'admin : nombre de demandes en attente, pour le badge de la nav. */
+export async function getPendingBookingsCount(): Promise<number> {
+  const supabase = await createClient();
+  const { count, error } = await supabase
+    .from("bookings")
+    .select("id", { count: "exact", head: true })
+    .eq("status", "en_attente");
+
+  if (error) return 0;
+  return count ?? 0;
+}
