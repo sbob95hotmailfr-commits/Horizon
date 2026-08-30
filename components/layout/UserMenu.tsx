@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
-export function UserMenu() {
+export function UserMenu({ isAdmin }: { isAdmin: boolean }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
@@ -27,6 +27,18 @@ export function UserMenu() {
       </button>
       {open && (
         <div className="absolute right-0 mt-2 w-48 rounded-xl border border-black/15 bg-white py-2">
+          {isAdmin && (
+            <>
+              <Link
+                href="/admin"
+                onClick={() => setOpen(false)}
+                className="block px-4 py-2 text-sm font-medium text-accent hover:bg-black/5"
+              >
+                Administration
+              </Link>
+              <div className="my-1 border-t border-black/10" />
+            </>
+          )}
           <Link
             href="/compte/preferences"
             onClick={() => setOpen(false)}

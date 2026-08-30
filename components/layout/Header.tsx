@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { ButtonLink } from "@/components/ui/Button";
 import { UserMenu } from "@/components/layout/UserMenu";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUserWithRole } from "@/lib/auth";
 
 const NAV_LINKS = [
   { href: "/vehicules", label: "Véhicules" },
@@ -11,7 +11,7 @@ const NAV_LINKS = [
 ];
 
 export async function Header() {
-  const user = await getCurrentUser();
+  const session = await getCurrentUserWithRole();
 
   return (
     <header className="sticky top-0 z-40 border-b border-black/10 bg-ivory/90 backdrop-blur">
@@ -29,8 +29,8 @@ export async function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          {user ? (
-            <UserMenu />
+          {session ? (
+            <UserMenu isAdmin={session.isAdmin} />
           ) : (
             <ButtonLink
               href="/connexion"
