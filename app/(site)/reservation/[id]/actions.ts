@@ -12,6 +12,7 @@ export interface CreateBookingInput {
   returnLocation: string | null;
   fullName: string;
   phone: string;
+  extras: string[];
 }
 
 export interface CreateBookingResult {
@@ -47,6 +48,7 @@ export async function createBooking(input: CreateBookingInput): Promise<CreateBo
     return_location: input.returnLocation,
     full_name: input.fullName.trim(),
     phone: input.phone.trim(),
+    extras: input.extras,
     status: "en_attente",
   });
 

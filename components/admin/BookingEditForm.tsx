@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { Button } from "@/components/ui/Button";
-import { PICKUP_LOCATIONS, TIME_SLOTS } from "@/lib/constants";
+import { PICKUP_LOCATIONS, TIME_SLOTS, BOOKING_EXTRAS } from "@/lib/constants";
 import type { BookingWithVehicle } from "@/lib/bookings";
 import type { BookingEditFormState } from "@/app/admin/reservations/actions";
 
@@ -124,6 +124,22 @@ export function BookingEditForm({
           </select>
         </Field>
       </div>
+
+      <fieldset className="space-y-2">
+        <legend className="text-sm font-medium">Options</legend>
+        {BOOKING_EXTRAS.map((extra) => (
+          <label key={extra.key} className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              name="extras"
+              value={extra.key}
+              defaultChecked={booking.extras.includes(extra.key)}
+              className="accent-accent"
+            />
+            {extra.label} (+{extra.price}€{extra.unit === "jour" ? "/jour" : " forfait"})
+          </label>
+        ))}
+      </fieldset>
 
       {state.error && <p className="text-sm font-medium text-black">{state.error}</p>}
 

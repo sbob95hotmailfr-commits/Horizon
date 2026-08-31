@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { cancelBooking } from "@/app/(site)/compte/reservations/actions";
 import { formatDate, formatPrice, cn } from "@/lib/utils";
+import { BOOKING_EXTRAS } from "@/lib/constants";
 import type { BookingWithVehicle } from "@/lib/bookings";
 
 const STATUS_LABELS: Record<BookingWithVehicle["status"], string> = {
@@ -43,6 +44,15 @@ export function BookingRow({ booking }: { booking: BookingWithVehicle }) {
         {booking.vehicle && (
           <p className="text-sm text-black/65">
             {formatPrice(booking.vehicle.price_per_day)}/jour
+          </p>
+        )}
+        {booking.extras.length > 0 && (
+          <p className="text-sm text-black/65">
+            Options :{" "}
+            {booking.extras
+              .map((key) => BOOKING_EXTRAS.find((e) => e.key === key)?.label)
+              .filter(Boolean)
+              .join(", ")}
           </p>
         )}
       </div>

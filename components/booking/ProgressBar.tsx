@@ -1,4 +1,4 @@
-const STEPS = ["Dates & lieu", "Vos informations", "Récapitulatif"];
+const STEPS = ["Dates & lieu", "Options", "Vos informations", "Récapitulatif"];
 
 export function ProgressBar({ step }: { step: number }) {
   return (

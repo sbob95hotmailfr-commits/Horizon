@@ -6,7 +6,13 @@ import { ProgressBar } from "@/components/booking/ProgressBar";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { createBooking } from "@/app/(site)/reservation/[id]/actions";
-import { PICKUP_LOCATIONS, TIME_SLOTS, DEFAULT_TIME } from "@/lib/constants";
+import {
+  PICKUP_LOCATIONS,
+  TIME_SLOTS,
+  DEFAULT_TIME,
+  BOOKING_EXTRAS,
+  extrasTotal,
+} from "@/lib/constants";
 import { formatPrice, formatDate } from "@/lib/utils";
 import type { Vehicle } from "@/types/database.types";
 
@@ -35,6 +41,11 @@ export function BookingWizard({
   const [returnLocation, setReturnLocation] = useState<string>(PICKUP_LOCATIONS[1]);
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
+  const [extras, setExtras] = useState<string[]>([]);
+
+  function toggleExtra(key: string) {
+    setExtras((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
+  }
 
   const days =
     startDate && endDate
@@ -47,11 +58,14 @@ export function BookingWizard({
         )
       : 0;
 
+  const extrasCost = extrasTotal(extras, days);
+  const totalPrice = days * vehicle.price_per_day + extrasCost;
+
   function canContinueStep1() {
     return Boolean(startDate && endDate && endDate >= startDate);
   }
 
-  function canContinueStep2() {
+  function canContinueStep3() {
     return Boolean(fullName.trim() && phone.trim());
   }
 
@@ -72,6 +86,7 @@ export function BookingWizard({
       returnLocation: differentReturn ? returnLocation : null,
       fullName,
       phone,
+      extras,
     });
     setSubmitting(false);
 
@@ -207,6 +222,45 @@ export function BookingWizard({
 
       {step === 2 && (
         <div className="space-y-4">
+          <div className="space-y-2">
+            {BOOKING_EXTRAS.map((extra) => {
+              const checked = extras.includes(extra.key);
+              return (
+                <label
+                  key={extra.key}
+                  className="flex cursor-pointer items-center justify-between gap-3 rounded-lg border border-black/15 px-3 py-2.5"
+                >
+                  <span className="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => toggleExtra(extra.key)}
+                      className="accent-accent"
+                    />
+                    {extra.label}
+                  </span>
+                  <span className="text-sm text-black/65">
+                    +{formatPrice(extra.price)}
+                    {extra.unit === "jour" ? "/jour" : " (forfait)"}
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+
+          <div className="flex gap-3">
+            <Button variant="ghost" onClick={() => setStep(1)} className="flex-1">
+              Retour
+            </Button>
+            <Button onClick={() => setStep(3)} className="flex-1">
+              Continuer
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {step === 3 && (
+        <div className="space-y-4">
           <label className="block space-y-1 text-sm">
             <span className="font-medium">Nom complet</span>
             <input
@@ -227,12 +281,12 @@ export function BookingWizard({
           </label>
 
           <div className="flex gap-3">
-            <Button variant="ghost" onClick={() => setStep(1)} className="flex-1">
+            <Button variant="ghost" onClick={() => setStep(2)} className="flex-1">
               Retour
             </Button>
             <Button
-              disabled={!canContinueStep2()}
-              onClick={() => setStep(3)}
+              disabled={!canContinueStep3()}
+              onClick={() => setStep(4)}
               className="flex-1"
             >
               Continuer
@@ -241,7 +295,7 @@ export function BookingWizard({
         </div>
       )}
 
-      {step === 3 && (
+      {step === 4 && (
         <div className="space-y-5">
           <div className="space-y-3 rounded-xl border border-black/10 p-4 text-sm">
             <Row label="Véhicule" value={`${vehicle.brand} ${vehicle.name}`} />
@@ -253,11 +307,16 @@ export function BookingWizard({
             {differentReturn && <Row label="Lieu de retour" value={returnLocation} />}
             <Row label="Conducteur" value={fullName} />
             <Row label="Téléphone" value={phone} />
-            <Row
-              label="Estimation"
-              value={formatPrice(days * vehicle.price_per_day)}
-              emphasis
-            />
+            {extras.length > 0 && (
+              <Row
+                label="Options"
+                value={extras
+                  .map((key) => BOOKING_EXTRAS.find((e) => e.key === key)?.label)
+                  .filter(Boolean)
+                  .join(", ")}
+              />
+            )}
+            <Row label="Estimation" value={formatPrice(totalPrice)} emphasis />
           </div>
 
           {!isAuthenticated && (
@@ -268,7 +327,7 @@ export function BookingWizard({
           {error && <p className="text-sm font-medium text-black">{error}</p>}
 
           <div className="flex gap-3">
-            <Button variant="ghost" onClick={() => setStep(2)} className="flex-1">
+            <Button variant="ghost" onClick={() => setStep(3)} className="flex-1">
               Retour
             </Button>
             <Button disabled={submitting} onClick={handleSubmit} className="flex-1">

@@ -64,6 +64,7 @@ export async function updateBookingDetails(
       end_date: endDate,
       pickup_time: String(formData.get("pickup_time") ?? ""),
       return_time: String(formData.get("return_time") ?? ""),
+      extras: formData.getAll("extras").map(String),
     })
     .eq("id", bookingId);
 

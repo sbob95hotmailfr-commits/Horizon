@@ -56,6 +56,7 @@ export interface Database {
           status: BookingStatus;
           full_name: string;
           phone: string;
+          extras: string[];
           created_at: string;
         };
         Insert: {
@@ -71,6 +72,7 @@ export interface Database {
           status?: BookingStatus;
           full_name: string;
           phone: string;
+          extras?: string[];
           created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["bookings"]["Insert"]>;
