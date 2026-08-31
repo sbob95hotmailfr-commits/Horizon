@@ -1,5 +1,6 @@
 import { Hero } from "@/components/home/Hero";
 import { TrustBand } from "@/components/home/TrustBand";
+import { CategoryBrowser } from "@/components/home/CategoryBrowser";
 import { PopularVehicles } from "@/components/home/PopularVehicles";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { Testimonials } from "@/components/home/Testimonials";
@@ -14,6 +15,7 @@ export default async function Home() {
     <>
       <Hero imageUrl={heroImage} carCategories={carCategories} />
       <TrustBand />
+      <CategoryBrowser />
       <PopularVehicles />
       <HowItWorks />
       <Testimonials />
