@@ -133,7 +133,7 @@ export function BookingEditForm({
               type="checkbox"
               name="extras"
               value={extra.key}
-              defaultChecked={booking.extras.includes(extra.key)}
+              defaultChecked={(booking.extras ?? []).includes(extra.key)}
               className="accent-accent"
             />
             {extra.label} (+{extra.price}€{extra.unit === "jour" ? "/jour" : " forfait"})

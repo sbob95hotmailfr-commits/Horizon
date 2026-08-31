@@ -46,10 +46,10 @@ export function BookingRow({ booking }: { booking: BookingWithVehicle }) {
             {formatPrice(booking.vehicle.price_per_day)}/jour
           </p>
         )}
-        {booking.extras.length > 0 && (
+        {(booking.extras ?? []).length > 0 && (
           <p className="text-sm text-black/65">
             Options :{" "}
-            {booking.extras
+            {(booking.extras ?? [])
               .map((key) => BOOKING_EXTRAS.find((e) => e.key === key)?.label)
               .filter(Boolean)
               .join(", ")}
