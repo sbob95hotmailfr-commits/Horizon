@@ -35,7 +35,12 @@ export function AdminBookingRow({ booking }: { booking: BookingWithVehicle }) {
   }
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-black/10 p-4 sm:flex-row sm:items-center sm:justify-between">
+    <div
+      className={cn(
+        "flex flex-col gap-3 rounded-xl border p-4 sm:flex-row sm:items-center sm:justify-between",
+        status === "en_attente" ? "border-accent" : "border-black/10",
+      )}
+    >
       <div className="space-y-1">
         <p className="font-medium">
           {booking.vehicle ? `${booking.vehicle.brand} ${booking.vehicle.name}` : "Véhicule"}
@@ -86,7 +91,7 @@ export function AdminBookingRow({ booking }: { booking: BookingWithVehicle }) {
               type="button"
               disabled={isPending}
               onClick={() => handle(refuseBooking)}
-              className="rounded-full border border-black/15 px-3 py-1.5 text-sm font-medium text-black/70 hover:border-accent hover:text-accent disabled:opacity-50"
+              className="rounded-full bg-black px-3 py-1.5 text-sm font-medium text-ivory hover:bg-black/85 disabled:opacity-50"
             >
               Refuser
             </button>

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AdminBookingRow } from "@/components/admin/AdminBookingRow";
-import { formatDate } from "@/lib/utils";
+import { formatDate, cn } from "@/lib/utils";
 import { toCsv, downloadCsv } from "@/lib/csv";
 import type { BookingWithVehicle } from "@/lib/bookings";
 
@@ -12,6 +12,9 @@ const STATUS_LABELS: Record<BookingWithVehicle["status"], string> = {
   refusee: "Refusée",
   annulee: "Annulée",
 };
+
+const STATUS_TABS = ["en_attente", "confirmee", "refusee"] as const;
+type StatusFilter = "toutes" | (typeof STATUS_TABS)[number];
 
 function exportBookingsCsv(bookings: BookingWithVehicle[]) {
   const headers = [
@@ -39,8 +42,9 @@ function exportBookingsCsv(bookings: BookingWithVehicle[]) {
 
 export function AdminBookingsList({ bookings }: { bookings: BookingWithVehicle[] }) {
   const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("toutes");
 
-  const filtered = useMemo(() => {
+  const searched = useMemo(() => {
     const query = search.trim().toLowerCase();
     if (!query) return bookings;
     return bookings.filter((b) => {
@@ -49,11 +53,34 @@ export function AdminBookingsList({ bookings }: { bookings: BookingWithVehicle[]
     });
   }, [bookings, search]);
 
+  const filtered =
+    statusFilter === "toutes" ? searched : searched.filter((b) => b.status === statusFilter);
+
   const pending = filtered.filter((b) => b.status === "en_attente");
   const others = filtered.filter((b) => b.status !== "en_attente");
 
   return (
     <div className="space-y-6">
+      <div className="flex flex-wrap items-center gap-2">
+        <FilterTab
+          active={statusFilter === "toutes"}
+          onClick={() => setStatusFilter("toutes")}
+          count={searched.length}
+        >
+          Toutes
+        </FilterTab>
+        {STATUS_TABS.map((status) => (
+          <FilterTab
+            key={status}
+            active={statusFilter === status}
+            onClick={() => setStatusFilter(status)}
+            count={searched.filter((b) => b.status === status).length}
+          >
+            {STATUS_LABELS[status]}
+          </FilterTab>
+        ))}
+      </div>
+
       <div className="flex flex-wrap items-center gap-3">
         <input
           type="search"
@@ -72,7 +99,13 @@ export function AdminBookingsList({ bookings }: { bookings: BookingWithVehicle[]
       </div>
 
       {filtered.length === 0 ? (
-        <p className="text-black/65">Aucune réservation ne correspond à cette recherche.</p>
+        <p className="text-black/65">Aucune réservation ne correspond à cette sélection.</p>
+      ) : statusFilter !== "toutes" ? (
+        <div className="space-y-3">
+          {filtered.map((booking) => (
+            <AdminBookingRow key={booking.id} booking={booking} />
+          ))}
+        </div>
       ) : (
         <>
           {pending.length > 0 && (
@@ -103,5 +136,32 @@ export function AdminBookingsList({ bookings }: { bookings: BookingWithVehicle[]
         </>
       )}
     </div>
+  );
+}
+
+function FilterTab({
+  active,
+  onClick,
+  count,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  count: number;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "rounded-full px-4 py-2 text-sm font-semibold",
+        active
+          ? "bg-black text-ivory"
+          : "border border-black/15 text-black/65 hover:border-accent hover:text-accent",
+      )}
+    >
+      {children} <span className="opacity-60">{count}</span>
+    </button>
   );
 }

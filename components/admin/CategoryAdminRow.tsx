@@ -50,7 +50,7 @@ export function CategoryAdminRow({ category }: { category: Category }) {
             type="button"
             disabled={isPending}
             onClick={handleDelete}
-            className="rounded-full border border-black/15 px-3 py-1.5 text-sm font-medium text-black/70 hover:border-accent hover:text-accent disabled:opacity-50"
+            className="rounded-full bg-black px-3 py-1.5 text-sm font-medium text-ivory hover:bg-black/85 disabled:opacity-50"
           >
             Supprimer
           </button>
