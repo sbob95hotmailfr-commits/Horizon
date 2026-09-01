@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { formatDate, formatPrice, cn } from "@/lib/utils";
+import { formatDate, formatPrice, cn, initials, avatarShade } from "@/lib/utils";
 import type { AdminCustomer } from "@/lib/admin-customers";
 
 const STATUS_LABELS: Record<string, string> = {
@@ -43,23 +43,40 @@ export function AdminCustomersList({ customers }: { customers: AdminCustomer[] }
         <p className="text-black/65">Aucun client ne correspond à cette recherche.</p>
       ) : (
         <div className="space-y-4">
-          {filtered.map((customer) => (
+          {filtered.map((customer) => {
+            const shade =
+              customer.role === "admin"
+                ? { bg: "bg-accent", text: "text-black" }
+                : avatarShade(customer.userId);
+
+            return (
             <div key={customer.userId} className="rounded-xl border border-black/10 p-4">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <div>
-                  <p className="font-medium">
-                    {customer.fullName}
-                    {customer.role === "admin" && (
-                      <span className="ml-2 rounded-full bg-black px-2 py-0.5 text-xs font-medium text-ivory">
-                        Admin
-                      </span>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={cn(
+                      "flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-bold",
+                      shade.bg,
+                      shade.text,
                     )}
-                  </p>
-                  <p className="text-sm text-black/65">{customer.phone}</p>
+                  >
+                    {initials(customer.fullName)}
+                  </div>
+                  <div>
+                    <p className="font-medium">
+                      {customer.fullName}
+                      {customer.role === "admin" && (
+                        <span className="ml-2 rounded-full border border-black/20 px-2 py-0.5 text-xs font-medium text-black/65">
+                          Admin
+                        </span>
+                      )}
+                    </p>
+                    <p className="text-sm text-black/65">{customer.phone}</p>
+                  </div>
                 </div>
-                <p className="text-sm text-black/65">
+                <span className="rounded-full bg-accent px-3 py-1 text-xs font-bold text-black">
                   {customer.bookings.length} réservation{customer.bookings.length !== 1 ? "s" : ""}
-                </p>
+                </span>
               </div>
 
               <div className="mt-3 space-y-2 border-t border-black/10 pt-3">
@@ -87,7 +104,8 @@ export function AdminCustomersList({ customers }: { customers: AdminCustomer[] }
                 ))}
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
