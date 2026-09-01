@@ -1,14 +1,22 @@
 import Link from "next/link";
 import { getAllVehiclesAdmin } from "@/lib/vehicles";
 import { getCategories } from "@/lib/categories";
+import { resolveVehicleImages } from "@/lib/vehicle-images";
 import { AdminVehiclesList } from "@/components/admin/AdminVehiclesList";
 
 export default async function AdminVehiculesPage() {
   const [vehicles, categories] = await Promise.all([getAllVehiclesAdmin(), getCategories()]);
   const availableCount = vehicles.filter((v) => v.available).length;
 
+  const vehiclesWithImages = await Promise.all(
+    vehicles.map(async (vehicle) => ({
+      vehicle,
+      imageUrl: (await resolveVehicleImages(vehicle))[0],
+    })),
+  );
+
   return (
-    <div className="max-w-4xl space-y-8">
+    <div className="max-w-6xl space-y-8">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">Véhicules</h1>
@@ -29,7 +37,7 @@ export default async function AdminVehiculesPage() {
       {vehicles.length === 0 ? (
         <p className="text-black/65">Aucun véhicule pour le moment.</p>
       ) : (
-        <AdminVehiclesList vehicles={vehicles} categories={categories} />
+        <AdminVehiclesList vehicles={vehiclesWithImages} categories={categories} />
       )}
     </div>
   );

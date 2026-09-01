@@ -4,11 +4,16 @@ import { useMemo, useState } from "react";
 import { VehicleAdminRow } from "@/components/admin/VehicleAdminRow";
 import type { Vehicle, Category } from "@/types/database.types";
 
+interface VehicleWithImage {
+  vehicle: Vehicle;
+  imageUrl?: string;
+}
+
 export function AdminVehiclesList({
   vehicles,
   categories,
 }: {
-  vehicles: Vehicle[];
+  vehicles: VehicleWithImage[];
   categories: Category[];
 }) {
   const [search, setSearch] = useState("");
@@ -16,14 +21,14 @@ export function AdminVehiclesList({
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
     if (!query) return vehicles;
-    return vehicles.filter((v) => {
+    return vehicles.filter(({ vehicle: v }) => {
       const categoryLabel = categories.find((c) => c.value === v.category)?.label ?? "";
       return `${v.brand} ${v.name} ${categoryLabel}`.toLowerCase().includes(query);
     });
   }, [vehicles, categories, search]);
 
-  const available = filtered.filter((v) => v.available);
-  const unavailable = filtered.filter((v) => !v.available);
+  const available = filtered.filter(({ vehicle }) => vehicle.available);
+  const unavailable = filtered.filter(({ vehicle }) => !vehicle.available);
 
   return (
     <div className="space-y-6">
@@ -46,9 +51,14 @@ export function AdminVehiclesList({
             {available.length === 0 ? (
               <p className="text-sm text-black/65">Aucun véhicule disponible.</p>
             ) : (
-              <div className="space-y-3">
-                {available.map((vehicle) => (
-                  <VehicleAdminRow key={vehicle.id} vehicle={vehicle} categories={categories} />
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {available.map(({ vehicle, imageUrl }) => (
+                  <VehicleAdminRow
+                    key={vehicle.id}
+                    vehicle={vehicle}
+                    imageUrl={imageUrl}
+                    categories={categories}
+                  />
                 ))}
               </div>
             )}
@@ -61,9 +71,14 @@ export function AdminVehiclesList({
             {unavailable.length === 0 ? (
               <p className="text-sm text-black/65">Aucun véhicule indisponible.</p>
             ) : (
-              <div className="space-y-3">
-                {unavailable.map((vehicle) => (
-                  <VehicleAdminRow key={vehicle.id} vehicle={vehicle} categories={categories} />
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {unavailable.map(({ vehicle, imageUrl }) => (
+                  <VehicleAdminRow
+                    key={vehicle.id}
+                    vehicle={vehicle}
+                    imageUrl={imageUrl}
+                    categories={categories}
+                  />
                 ))}
               </div>
             )}

@@ -2,16 +2,20 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { deleteVehicle, toggleVehicleAvailability } from "@/app/admin/vehicules/actions";
+import { Monogram } from "@/components/brand/Monogram";
 import { formatPrice, cn } from "@/lib/utils";
 import type { Vehicle, Category } from "@/types/database.types";
 
 export function VehicleAdminRow({
   vehicle,
+  imageUrl,
   categories,
 }: {
   vehicle: Vehicle;
+  imageUrl?: string;
   categories: Category[];
 }) {
   const router = useRouter();
@@ -50,33 +54,50 @@ export function VehicleAdminRow({
   }
 
   return (
-    <div className="rounded-xl border border-black/10 p-4">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div className="overflow-hidden rounded-2xl border border-black/10 bg-white">
+      <div className="relative aspect-[4/3] w-full bg-black/5">
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt={`${vehicle.brand} ${vehicle.name}`}
+            fill
+            draggable={false}
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center">
+            <Monogram className="h-10 w-10 text-black/20" />
+          </div>
+        )}
+        <button
+          type="button"
+          disabled={isPending}
+          onClick={handleToggle}
+          className={cn(
+            "absolute right-3 top-3 rounded-full px-3 py-1 text-xs font-medium disabled:opacity-50",
+            available ? "bg-black text-ivory" : "border border-black/20 bg-white text-black/60",
+          )}
+        >
+          {available ? "Disponible" : "Indisponible"}
+        </button>
+      </div>
+
+      <div className="space-y-3 p-4">
         <div>
           <p className="font-medium">
             {vehicle.brand} {vehicle.name}
-            <span className="ml-2 text-sm text-black/65">
-              {categoryLabel} · {formatPrice(vehicle.price_per_day)}/jour
-            </span>
+          </p>
+          <p className="text-sm text-black/65">
+            {categoryLabel} · {formatPrice(vehicle.price_per_day)}/jour
           </p>
           <p className="text-sm text-black/65">{vehicle.location}</p>
         </div>
 
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            disabled={isPending}
-            onClick={handleToggle}
-            className={cn(
-              "rounded-full px-3 py-1 text-xs font-medium disabled:opacity-50",
-              available ? "bg-black text-ivory" : "border border-black/20 text-black/60",
-            )}
-          >
-            {available ? "Disponible" : "Indisponible"}
-          </button>
+        <div className="flex items-center gap-2">
           <Link
             href={`/admin/vehicules/${vehicle.id}`}
-            className="rounded-full border border-black/15 px-3 py-1.5 text-sm font-medium text-black/70 hover:border-accent hover:text-accent"
+            className="flex-1 rounded-full border border-black/15 px-3 py-1.5 text-center text-sm font-medium text-black/70 hover:border-accent hover:text-accent"
           >
             Modifier
           </Link>
@@ -84,13 +105,13 @@ export function VehicleAdminRow({
             type="button"
             disabled={isPending}
             onClick={handleDelete}
-            className="rounded-full bg-black px-3 py-1.5 text-sm font-medium text-ivory hover:bg-black/85 disabled:opacity-50"
+            className="flex-1 rounded-full bg-black px-3 py-1.5 text-sm font-medium text-ivory hover:bg-black/85 disabled:opacity-50"
           >
             Supprimer
           </button>
         </div>
+        {deleteError && <p className="text-sm font-medium text-black">{deleteError}</p>}
       </div>
-      {deleteError && <p className="mt-2 text-sm font-medium text-black">{deleteError}</p>}
     </div>
   );
 }
