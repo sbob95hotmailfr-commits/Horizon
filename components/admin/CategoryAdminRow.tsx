@@ -29,14 +29,7 @@ export function CategoryAdminRow({ category }: { category: Category }) {
     <div className="rounded-xl border border-black/10 p-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <p className="font-medium">
-            {category.label}
-            {category.is_utility && (
-              <span className="ml-2 rounded-full bg-black/10 px-2 py-0.5 text-xs font-medium text-black/70">
-                Utilitaire
-              </span>
-            )}
-          </p>
+          <p className="font-medium">{category.label}</p>
           <p className="text-sm text-black/65">{category.value}</p>
         </div>
         <div className="flex items-center gap-2">
