@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getCurrentUserWithRole } from "@/lib/auth";
 import { getPendingBookingsCount } from "@/lib/bookings";
 import { Logo } from "@/components/brand/Logo";
+import { AdminNav } from "@/components/admin/AdminNav";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getCurrentUserWithRole();
@@ -22,49 +23,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <Link href="/" aria-label="Horizon — Accueil">
           <Logo />
         </Link>
-        <nav className="flex flex-col gap-1 text-sm font-medium">
-          <Link
-            href="/admin/statistiques"
-            className="rounded-lg px-3 py-2 hover:bg-black/5 hover:text-accent"
-          >
-            Statistiques
-          </Link>
-          <Link
-            href="/admin/reservations"
-            className="flex items-center justify-between rounded-lg px-3 py-2 hover:bg-black/5 hover:text-accent"
-          >
-            Réservations
-            {pendingCount > 0 && (
-              <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-semibold text-black">
-                {pendingCount}
-              </span>
-            )}
-          </Link>
-          <Link
-            href="/admin/vehicules"
-            className="rounded-lg px-3 py-2 hover:bg-black/5 hover:text-accent"
-          >
-            Véhicules
-          </Link>
-          <Link
-            href="/admin/categories"
-            className="rounded-lg px-3 py-2 hover:bg-black/5 hover:text-accent"
-          >
-            Catégories
-          </Link>
-          <Link
-            href="/admin/utilisateurs"
-            className="rounded-lg px-3 py-2 hover:bg-black/5 hover:text-accent"
-          >
-            Utilisateurs
-          </Link>
-          <Link
-            href="/admin/avis"
-            className="rounded-lg px-3 py-2 hover:bg-black/5 hover:text-accent"
-          >
-            Avis
-          </Link>
-        </nav>
+        <AdminNav pendingCount={pendingCount} />
       </aside>
 
       <main className="flex-1 px-8 py-10">{children}</main>
