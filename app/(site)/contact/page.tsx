@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description: "Une question sur une réservation ou un véhicule Horizon ? Contactez-nous.",
+};
 
 export default function ContactPage() {
   return (

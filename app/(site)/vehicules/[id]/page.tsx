@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -13,6 +14,24 @@ import { getCategories } from "@/lib/categories";
 
 interface PageProps {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const vehicle = await getVehicleById(id);
+
+  if (!vehicle) {
+    return { title: "Véhicule introuvable" };
+  }
+
+  const title = `${vehicle.brand} ${vehicle.name} — location à ${vehicle.location}`;
+  const description = `${vehicle.description} À partir de ${vehicle.price_per_day} €/jour, assurance et assistance incluses.`;
+
+  return {
+    title,
+    description,
+    openGraph: { title, description },
+  };
 }
 
 export default async function VehiculeDetailPage({ params }: PageProps) {

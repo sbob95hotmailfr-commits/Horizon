@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { FaqAccordion } from "@/components/faq/FaqAccordion";
 import { FAQ_GROUPS } from "@/lib/faq";
+
+export const metadata: Metadata = {
+  title: "Questions fréquentes",
+  description: "Âge minimum, documents, caution, annulation, kilométrage : toutes les réponses.",
+};
 
 export default function FaqPage() {
   return (

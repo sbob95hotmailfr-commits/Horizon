@@ -1,4 +1,9 @@
+import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
+
+export const metadata: Metadata = {
+  title: "Politique de confidentialité",
+};
 
 export default function ConfidentialitePage() {
   return (

@@ -1,10 +1,17 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { VehicleCard } from "@/components/vehicles/VehicleCard";
 import { VehicleFilters } from "@/components/vehicles/VehicleFilters";
 import { getVehicles } from "@/lib/vehicles";
 import { resolveVehicleImages } from "@/lib/vehicle-images";
 import { getCarCategories } from "@/lib/categories";
+
+export const metadata: Metadata = {
+  title: "Nos véhicules",
+  description:
+    "Citadines, berlines, SUV, cabriolets et électriques à louer à Paris et en Île-de-France, assurance et assistance incluses.",
+};
 
 interface PageProps {
   searchParams: Promise<{

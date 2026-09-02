@@ -1,10 +1,17 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { VehicleCard } from "@/components/vehicles/VehicleCard";
 import { VehicleFilters } from "@/components/vehicles/VehicleFilters";
 import { getVehicles } from "@/lib/vehicles";
 import { resolveVehicleImages } from "@/lib/vehicle-images";
 import { getUtilityCategories } from "@/lib/categories";
+
+export const metadata: Metadata = {
+  title: "Utilitaires",
+  description:
+    "Location d'utilitaires à Paris et en Île-de-France pour vos déménagements et transports de matériel.",
+};
 
 interface PageProps {
   searchParams: Promise<{
