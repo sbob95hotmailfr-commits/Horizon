@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { getVehicleBookedRanges } from "@/lib/vehicles";
 
 export interface CreateBookingInput {
   vehicleId: string;
@@ -35,6 +36,17 @@ export async function createBooking(input: CreateBookingInput): Promise<CreateBo
   }
   if (!input.fullName.trim() || !input.phone.trim()) {
     return { success: false, error: "Merci de renseigner vos coordonnées." };
+  }
+
+  const bookedRanges = await getVehicleBookedRanges(input.vehicleId);
+  const overlaps = bookedRanges.some(
+    (r) => input.startDate <= r.endDate && input.endDate >= r.startDate,
+  );
+  if (overlaps) {
+    return {
+      success: false,
+      error: "Ce véhicule n'est plus disponible sur ces dates. Merci de choisir d'autres dates.",
+    };
   }
 
   const { error } = await supabase.from("bookings").insert({
